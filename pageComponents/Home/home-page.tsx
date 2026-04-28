@@ -18,10 +18,9 @@ export default function HomePageComponent() {
             ScrollTrigger.create({
                 trigger: heroRef.current,
                 start: 'top top',
-                end: '+=150%', // Increased to account for two phases of animation
+                end: '+=20%', // Increased to account for two phases of animation
                 pin: true,
                 pinSpacing: true,
-                scrub: true,
             });
 
             // 2. Create a Timeline for OurPrograms
@@ -29,7 +28,7 @@ export default function HomePageComponent() {
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: 'top top',
-                    end: '+=105%', // Matches the hero pinning duration
+                    end: '+=20%', // Matches the hero pinning duration
                     scrub: true,
                 },
             });
@@ -38,25 +37,20 @@ export default function HomePageComponent() {
                 programsWrapperRef.current,
                 {
                     y: '100vh',
-                    width: '50%',
+                    width: '80%',
                     borderRadius: '20px',
                     opacity: 1,
                 },
                 {
-                    y: '10vh', // Positioned nicely on screen
-                    width: '80%',
+                    y: '-10vh', // Positioned nicely on screen
+                    width: '100%',
                     borderRadius: '0px',
                     opacity: 1,
-                    ease: 'none',
+                    ease: 'power3.inOut',
                 }
-            )
-                // 3. The "Disappear" Phase
-                // This starts right after the first animation finishes
-                .to(programsWrapperRef.current, {
-                    y: '-10vh', // Slides out to the top
-                    opacity: 1, // Fades out
-                    ease: 'none',
-                });
+            );
+            // 3. The "Disappear" Phase
+            // This starts right after the first animation finishes
         }, containerRef);
 
         return () => ctx.revert();
@@ -69,10 +63,10 @@ export default function HomePageComponent() {
             </div>
 
             {/* Centering wrapper is essential for symmetrical width expansion */}
-            <div className="fixed inset-0 pointer-events-none flex justify-center items-end z-10">
+            <div className="absolute top-100 left-[10%] pointer-events-none flex justify-center items-end z-10">
                 <div
                     ref={programsWrapperRef}
-                    className="bg-white pointer-events-auto shadow-2xl h-[calc(100% - 400px)]"
+                    className="bg-white pointer-events-auto shadow-2xl flex-1 px-15"
                 >
                     <OurPrograms />
                 </div>
