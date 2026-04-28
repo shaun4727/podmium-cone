@@ -1,11 +1,9 @@
-import HeroSection from '@/pageComponents/Home/hero-section';
-import { OurPrograms } from '@/pageComponents/Home/our-programs';
+import HomePageComponent from '@/pageComponents/Home/home-page';
 
 export default function Home() {
     return (
         <div>
-            <HeroSection />
-            <OurPrograms />
+            <HomePageComponent />
         </div>
     );
 }
