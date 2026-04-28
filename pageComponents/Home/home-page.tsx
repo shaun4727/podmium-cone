@@ -14,36 +14,48 @@ export default function HomePageComponent() {
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            // 1. Keep the Hero pinned
+            // 1. Pin the Hero (stays same)
             ScrollTrigger.create({
                 trigger: heroRef.current,
                 start: 'top top',
-                end: '+=100%', // Match the duration of the width animation
+                end: '+=200%', // Increased to account for two phases of animation
                 pin: true,
                 pinSpacing: true,
             });
 
-            // 2. Animate the Programs section (Slide + Width)
-            gsap.fromTo(
+            // 2. Create a Timeline for OurPrograms
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top top',
+                    end: '+=200%', // Matches the hero pinning duration
+                    scrub: true,
+                },
+            });
+
+            tl.fromTo(
                 programsWrapperRef.current,
                 {
-                    y: '100vh', // Start below the screen
+                    y: '100vh',
                     width: '50%',
-                    borderRadius: '20px', // Optional: adds a nice effect during expansion
+                    borderRadius: '20px',
+                    opacity: 1,
                 },
                 {
-                    y: 0,
+                    y: '10vh', // Positioned nicely on screen
                     width: '80%',
                     borderRadius: '0px',
+                    opacity: 1,
                     ease: 'none',
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: 'top top',
-                        end: '+=100%',
-                        scrub: true,
-                    },
                 }
-            );
+            )
+                // 3. The "Disappear" Phase
+                // This starts right after the first animation finishes
+                .to(programsWrapperRef.current, {
+                    y: '-10vh', // Slides out to the top
+                    opacity: 1, // Fades out
+                    ease: 'none',
+                });
         }, containerRef);
 
         return () => ctx.revert();
