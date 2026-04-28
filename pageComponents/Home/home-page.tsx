@@ -18,7 +18,7 @@ export default function HomePageComponent() {
             ScrollTrigger.create({
                 trigger: heroRef.current,
                 start: 'top top',
-                end: '+=20%', // Increased to account for two phases of animation
+                end: '+=120%', // Increased to account for two phases of animation
                 pin: true,
                 pinSpacing: true,
             });
@@ -28,8 +28,8 @@ export default function HomePageComponent() {
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: 'top top',
-                    end: '+=20%', // Matches the hero pinning duration
-                    scrub: true,
+                    end: '+=10%', // Matches the hero pinning duration
+                    scrub: 5,
                 },
             });
 
@@ -42,7 +42,7 @@ export default function HomePageComponent() {
                     opacity: 1,
                 },
                 {
-                    y: '-10vh', // Positioned nicely on screen
+                    y: '90vh', // Positioned nicely on screen
                     width: '100%',
                     borderRadius: '0px',
                     opacity: 1,
@@ -63,10 +63,10 @@ export default function HomePageComponent() {
             </div>
 
             {/* Centering wrapper is essential for symmetrical width expansion */}
-            <div className="absolute top-100 left-[10%] pointer-events-none flex justify-center items-end z-10">
+            <div className="absolute top-100 left-4 md:left-[10%] pointer-events-none flex justify-center items-end z-10">
                 <div
                     ref={programsWrapperRef}
-                    className="bg-white pointer-events-auto shadow-2xl flex-1 px-15"
+                    className="bg-white pointer-events-auto md:shadow-2xl flex-1 px-4 md:px-15"
                 >
                     <OurPrograms />
                 </div>

@@ -4,11 +4,17 @@ import { ArrowUpRight } from 'lucide-react';
 const HeroSection = () => {
     return (
         <div className="min-h-screen w-full relative">
-            <video autoPlay muted playsInline loop className="h-full w-full object-cover">
+            <video
+                autoPlay
+                muted
+                playsInline
+                loop
+                className="min-h-screen md:h-full w-full object-cover"
+            >
                 <source src="/videos/hero-1.mp4" />
             </video>
 
-            <div className="absolute flex flex-col gap-48 inset-0 mx-12 mt-6">
+            <div className="absolute flex flex-col gap-24 md:gap-48 inset-0 mx-4 md:mx-12 mt-6">
                 <nav className="flex justify-between w-full font-montserrat border-3 border-indigo-600">
                     <h1 className="text-md text-white uppercase font-bold flex flex-col items-center leading-tight">
                         <span className="text-[9px] font-regular">The</span>
@@ -45,14 +51,14 @@ const HeroSection = () => {
                     </ul>
                 </nav>
 
-                <div className="hero-text text-white font-montserrat w-1/2">
-                    <h1 className="text-7xl font-montserrat uppercase font-bold">
+                <div className="hero-text text-white font-montserrat md:w-1/2">
+                    <h1 className="text-lg md:text-7xl font-montserrat uppercase font-bold">
                         Train your brain.
                     </h1>
-                    <h1 className="text-7xl font-montserrat uppercase font-bold">
+                    <h1 className="text-lg md:text-7xl font-montserrat uppercase font-bold">
                         Dominate your game.
                     </h1>
-                    <p className="mt-6 text-lg">
+                    <p className="mt-6 text-sm md:text-lg">
                         Elite mental performance coaching for competitive youth athletes who want to
                         silence self-doubt and and start competing with consistent confidence.
                     </p>
