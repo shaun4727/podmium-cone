@@ -18,9 +18,10 @@ export default function HomePageComponent() {
             ScrollTrigger.create({
                 trigger: heroRef.current,
                 start: 'top top',
-                end: '+=200%', // Increased to account for two phases of animation
+                end: '+=150%', // Increased to account for two phases of animation
                 pin: true,
                 pinSpacing: true,
+                scrub: true,
             });
 
             // 2. Create a Timeline for OurPrograms
@@ -28,7 +29,7 @@ export default function HomePageComponent() {
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: 'top top',
-                    end: '+=200%', // Matches the hero pinning duration
+                    end: '+=105%', // Matches the hero pinning duration
                     scrub: true,
                 },
             });
@@ -69,7 +70,10 @@ export default function HomePageComponent() {
 
             {/* Centering wrapper is essential for symmetrical width expansion */}
             <div className="fixed inset-0 pointer-events-none flex justify-center items-end z-10">
-                <div ref={programsWrapperRef} className="bg-white pointer-events-auto shadow-2xl ">
+                <div
+                    ref={programsWrapperRef}
+                    className="bg-white pointer-events-auto shadow-2xl h-[calc(100% - 400px)]"
+                >
                     <OurPrograms />
                 </div>
             </div>
