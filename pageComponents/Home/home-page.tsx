@@ -18,7 +18,7 @@ export default function HomePageComponent() {
             ScrollTrigger.create({
                 trigger: heroRef.current,
                 start: 'top top',
-                end: '+=120%', // Increased to account for two phases of animation
+                end: '+=130%', // Increased to account for two phases of animation
                 pin: true,
                 pinSpacing: true,
             });
@@ -26,10 +26,10 @@ export default function HomePageComponent() {
             // 2. Create a Timeline for OurPrograms
             const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: 'top top',
+                    trigger: programsWrapperRef.current,
+                    start: 'top center',
                     end: '+=10%', // Matches the hero pinning duration
-                    scrub: 5,
+                    scrub: 3,
                 },
             });
 
@@ -37,13 +37,14 @@ export default function HomePageComponent() {
                 programsWrapperRef.current,
                 {
                     y: '100vh',
-                    width: '80%',
+                    scale: 0.5, // Start at 50% size
+                    transformOrigin: 'top center',
                     borderRadius: '20px',
                     opacity: 1,
                 },
                 {
                     y: '90vh', // Positioned nicely on screen
-                    width: '100%',
+                    scale: 1,
                     borderRadius: '0px',
                     opacity: 1,
                     ease: 'power3.inOut',
