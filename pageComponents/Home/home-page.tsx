@@ -4,6 +4,7 @@ import { OurPrograms } from '@/pageComponents/Home/our-programs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
+import { InspiredSection } from './inspired-section';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +19,7 @@ export default function HomePageComponent() {
             ScrollTrigger.create({
                 trigger: heroRef.current,
                 start: 'top top',
-                end: '+=130%', // Increased to account for two phases of animation
+                end: '+=100%', // Increased to account for two phases of animation
                 pin: true,
                 pinSpacing: true,
             });
@@ -73,8 +74,8 @@ export default function HomePageComponent() {
                 </div>
             </div>
 
-            {/* Spacer to allow scrolling */}
-            <div className="h-screen" />
+            <InspiredSection />
+            <div className="min-h-screen" />
         </main>
     );
 }

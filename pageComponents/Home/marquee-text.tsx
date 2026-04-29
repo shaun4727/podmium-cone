@@ -40,7 +40,7 @@ export const Marquee = () => {
             <div ref={marqueeRef} className="flex whitespace-nowrap will-change-transform">
                 {/* First set of text */}
                 {[...Array(3)].map((_, i) => (
-                    <div className="flex items-center gap-8 px-4">
+                    <div className="flex items-center gap-8 px-4" key={i}>
                         <span className="text-4xl md:text-[42px] font-bold uppercase text-white/15 font-montserrat">
                             The
                         </span>

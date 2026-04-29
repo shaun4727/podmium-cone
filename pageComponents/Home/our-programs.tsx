@@ -7,7 +7,7 @@ export const OurPrograms = () => {
                 Our Programs
             </h1>
             <div className="flex flex-col md:flex-row gap-4 mt-12 justify-center">
-                <div className="group relative overflow-hidden w-90 md:h-[500px] md:w-[400px]">
+                <div className="group relative overflow-hidden w-90 md:h-[300px] md:w-[400px]">
                     {/* ব্যাকগ্রাউন্ড ইমেজ */}
                     <Image
                         src="/pod-images/playing.jpg"
@@ -43,7 +43,7 @@ export const OurPrograms = () => {
                         </div>
                     </div>
                 </div>
-                <div className="group relative overflow-hidden w-90 md:h-[500px] md:w-[400px]">
+                <div className="group relative overflow-hidden w-90 md:h-[300px] md:w-[400px]">
                     {/* ব্যাকগ্রাউন্ড ইমেজ */}
                     <Image
                         src={`/pod-images/study-2.jpeg`}
@@ -79,7 +79,7 @@ export const OurPrograms = () => {
                         </div>
                     </div>
                 </div>
-                <div className="group relative overflow-hidden w-90 md:h-[500px] md:w-[400px]">
+                <div className="group relative overflow-hidden w-90 md:h-[300px] md:w-[400px]">
                     {/* ব্যাকগ্রাউন্ড ইমেজ */}
                     <Image
                         src={`/pod-images/study.webp`}
