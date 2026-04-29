@@ -62,16 +62,47 @@ const HeroSection = () => {
                         Elite mental performance coaching for competitive youth athletes who want to
                         silence self-doubt and and start competing with consistent confidence.
                     </p>
-                    <button className="group relative overflow-hidden uppercase cursor-pointer flex gap-2 mt-4 bg-theme-brandy p-2 text-black transition-colors duration-500 hover:text-white">
-                        {/* 1. The Expanding Layer */}
-                        <div className="absolute inset-0 bg-black transition-transform duration-500 scale-x-0 origin-right group-hover:scale-100" />
 
-                        {/* 2. The Content (Z-index is key here) */}
-                        <span className="relative z-10 flex items-center gap-2">
+                    {/* /**
+                     * HOVER EFFECT LOGIC: "The Ripple Expansion"
+                     * ----------------------------------------
+                     * * 1. BASE STATE:
+                     * - The button has a 'bg-theme-brandy' background.
+                     * - The Arrow Wrapper is a small black square ('bg-black') on the right.
+                     * - The "magic" div inside the arrow wrapper is 'scale-0' (invisible).
+                     * * 2. THE EXPANSION (group-hover:scale-[40]):
+                     * - On hover, the 'scale-0' div inside the icon span expands to 40x its size.
+                     * - Because it is nested INSIDE the icon span, the growth origin is the icon itself.
+                     * - 'rounded-full' makes the expansion a circle, creating a ripple/radial effect.
+                     * - 'absolute inset-0' ensures the growth starts exactly from the icon's boundaries.
+                     * * 3. KEY CLASS BREAKDOWN:
+                     * - 'group': Placed on parent; allows children to react when the button is hovered.
+                     * - 'overflow-hidden': Essential! It clips the massive scaled-up circle so it
+                     * doesn't bleed outside the button borders.
+                     * - 'relative z-10/z-11': Ensures text and icon stay "above" the expanding
+                     * black circle so they don't disappear.
+                     * - '-z-10' (on the expanding div): Places the circle behind the icon/text
+                     * but above the button's base background.
+                     * - 'group-hover:bg-transparent': Hides the small black square of the icon span
+                     * on hover so it blends perfectly into the large expanding circle.
+                     * - 'transition-transform': Enables the smooth "growing" animation rather
+                     * than an instant flicker.
+                     */}
+
+                    <button className="group relative overflow-hidden uppercase cursor-pointer flex items-center gap-2 mt-4 bg-theme-brandy p-2 text-black transition-colors duration-500 hover:text-white">
+                        {/* 1. The Content (Text) */}
+                        <span className="relative z-11 pl-2 group-hover:text-white">
                             Schedule an intro call
-                            <span className="bg-black text-white p-1 group-hover:bg-theme-brandy transition-colors duration-800 ">
-                                <ArrowUpRight size={16} />
-                            </span>
+                        </span>
+
+                        {/* 2. The Arrow Wrapper + Expanding Background */}
+                        <span className="relative z-10 flex items-center justify-center bg-black text-white  p-1 transition-colors duration-500 group-hover:bg-transparent">
+                            <ArrowUpRight size={16} />
+
+                            {/* This div is the magic: It scales from the icon to cover the button */}
+                            <div className="absolute inset-0 bg-black -z-10 scale-0 rounded-full transition-transform duration-500 ease-in-out group-hover:scale-[40]" />
+
+                            <div className="absolute inset-0 bg-theme-brandy scale-0 p-1 -z-10  transition-all duration-300 ease-in-out group-hover:scale-100" />
                         </span>
                     </button>
                 </div>
