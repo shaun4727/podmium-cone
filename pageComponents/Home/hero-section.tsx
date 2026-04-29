@@ -1,7 +1,48 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { ArrowUpRight } from 'lucide-react';
 
+import gsap from 'gsap';
+import { SplitText } from 'gsap/SplitText';
+import { useLayoutEffect, useRef } from 'react';
+
+gsap.registerPlugin(SplitText);
+
 const HeroSection = () => {
+    const containerRef = useRef(null);
+
+    useLayoutEffect(() => {
+        // Register the plugin inside the hook
+
+        let ctx = gsap.context(() => {
+            // Ensure fonts are loaded to prevent layout shifts
+            document.fonts.ready.then(() => {
+                const split = new SplitText('.split', {
+                    type: 'lines, words',
+                    linesClass: 'overflow-hidden', // This acts as the 'mask'
+                });
+
+                // The actual animation
+                gsap.from(split.words, {
+                    yPercent: 100,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: {
+                        amount: 0.5,
+                        from: 'start',
+                    },
+                    autoAlpha: 0,
+                    delay: 0.5,
+                    ease: 'expo.inOut',
+                    // Cleanup split on complete if necessary
+                });
+            });
+        }, containerRef);
+
+        return () => ctx.revert(); // Clean up to prevent memory leaks
+    }, []);
+
     return (
         <div className="min-h-screen w-full relative">
             <video
@@ -51,14 +92,14 @@ const HeroSection = () => {
                     </ul>
                 </nav>
 
-                <div className="hero-text text-white font-montserrat md:w-1/2">
-                    <h1 className="text-lg md:text-7xl font-montserrat uppercase font-bold">
+                <div ref={containerRef} className="hero-text text-white font-montserrat md:w-1/2">
+                    <h1 className="split text-lg md:text-7xl font-montserrat uppercase font-bold">
                         Train your brain.
                     </h1>
-                    <h1 className="text-lg md:text-7xl font-montserrat uppercase font-bold">
+                    <h1 className="split text-lg md:text-7xl font-montserrat uppercase font-bold">
                         Dominate your game.
                     </h1>
-                    <p className="mt-6 text-sm md:text-lg">
+                    <p className="split mt-6 text-sm md:text-lg">
                         Elite mental performance coaching for competitive youth athletes who want to
                         silence self-doubt and and start competing with consistent confidence.
                     </p>
