@@ -119,6 +119,7 @@
 
 @theme {
     --font-montserrat: var(--font-montserrat);
+    --font-geistSans: var(--font-geistSans);
     --color-theme-brandy: #b07d34;
 }
 

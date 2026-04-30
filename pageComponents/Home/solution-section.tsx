@@ -95,7 +95,7 @@ export const SolutionSection = () => {
                 <button className="group relative overflow-hidden uppercase cursor-pointer flex items-center gap-2 mt-4 bg-black p-2 text-white transition-colors duration-500 hover:text-white solution-button opacity-0 invisible">
                     {/* 1. The Content (Text) */}
                     <span className="relative z-11 pl-2 group-hover:text-white">
-                        Schedule an intro call
+                        See our program
                     </span>
 
                     {/* 2. The Arrow Wrapper + Expanding Background */}
