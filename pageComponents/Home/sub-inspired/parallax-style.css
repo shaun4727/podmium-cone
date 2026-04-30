@@ -1,0 +1,55 @@
+.parallax {
+    position: relative;
+    z-index: 1;
+    min-height: 55vh; /* Ensure there is height for 'fill' images */
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Target the wrapper div Next.js creates around 'fill' images */
+.parallax img {
+    animation: parallax-anim linear;
+    animation-timeline: scroll(root);
+    animation-range: entry 0% exit 100%;
+    will-change: transform;
+}
+
+/* Individual Speed Controls */
+.parallax-bg {
+    --parallax-speed: -0.1;
+}
+.parallax-dust {
+    --parallax-speed: -1;
+}
+.parallax-luna {
+    --parallax-speed: 1.4;
+}
+.parallax-manny {
+    --parallax-speed: 1.9;
+}
+.parallax-jax {
+    --parallax-speed: 1;
+}
+.parallax-rays {
+    --parallax-speed: 1;
+}
+
+.parallax-foreground-back,
+.parallax-foreground-front {
+    z-index: 10;
+    /* Static elements (speed 0) create the 'ground' */
+    --parallax-speed: 0;
+}
+
+.parallax-foreground-back {
+    mix-blend-mode: hard-light;
+}
+
+@keyframes parallax-anim {
+    from {
+        transform: translateY(0) scale(1.2); /* Scale up to prevent white gaps */
+    }
+    to {
+        transform: translateY(calc(var(--parallax-speed) * 160px)) scale(1.2);
+    }
+}
