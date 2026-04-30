@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
 import { InspiredSection } from './inspired-section';
+import ScrollingText from './intro-section';
 import { SolutionSection } from './solution-section';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -77,6 +78,7 @@ export default function HomePageComponent() {
 
             <InspiredSection />
             <SolutionSection />
+            <ScrollingText />
             <div className="min-h-screen" />
         </main>
     );
