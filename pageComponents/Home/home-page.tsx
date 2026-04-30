@@ -59,7 +59,7 @@ export default function HomePageComponent() {
     }, []);
 
     return (
-        <main ref={containerRef} className="relative bg-black overflow-x-hidden">
+        <main ref={containerRef} className="relative bg-black ">
             <div ref={heroRef} className="z-0">
                 <HeroSection />
             </div>
