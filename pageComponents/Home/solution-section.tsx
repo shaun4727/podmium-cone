@@ -1,3 +1,5 @@
+import ParallaxMaskedImage from './sub-solution/solution-image';
+
 export const SolutionSection = () => {
     return (
         <div className="font-montserrat bg-white flex flex-col md:flex-row gap-16 px-4 md:px-12 py-12 items-center">
@@ -19,20 +21,7 @@ export const SolutionSection = () => {
                 </div>
             </div>
             <div className="w-1/2">
-                <div
-                    className="w-full h-[550px] bg-cover bg-center bg-no-repeat"
-                    style={{
-                        backgroundImage: "url('/pod-images/inspired-solution.jpg')",
-                        maskImage: "url('/pod-images/brush-mask.png')",
-                        WebkitMaskImage: "url('/pod-images/brush-mask.png')",
-                        maskSize: 'contain',
-                        WebkitMaskSize: 'contain',
-                        maskPosition: 'center',
-                        WebkitMaskPosition: 'center',
-                        maskRepeat: 'no-repeat',
-                        WebkitMaskRepeat: 'no-repeat',
-                    }}
-                />
+                <ParallaxMaskedImage />
             </div>
         </div>
     );
