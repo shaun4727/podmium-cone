@@ -11,7 +11,7 @@
     animation-timeline: scroll(root);
     animation-range: entry 0% exit 100%;
     will-change: transform;
-    --parallax-speed: 3;
+    --parallax-speed: 10;
 }
 
 @keyframes parallax-anim {
