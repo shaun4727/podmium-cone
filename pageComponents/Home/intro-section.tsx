@@ -25,8 +25,9 @@ export const IntroSection = () => {
                         alt="formal image"
                         className="w-100 h-140"
                     />
-                    <div className="font-geistSans">
-                        <p>
+                    <div className="font-roboto flex flex-col gap-6 md:mt-24">
+                        {/* <p className="first-letter:text-5xl first-letter:font-bold first-letter:mr-3 first-letter:float-left  first-letter:text-theme-brandy"> */}
+                        <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-theme-brandy">
                             As a former Division I volleyball player with a PhD in Sport Psychology,
                             I know exactly what you're going through.
                         </p>
@@ -40,15 +41,15 @@ export const IntroSection = () => {
                             and I had no one to show me the way through.
                         </p>
                         <p>
-                            That's exactly why I pursued this career and founded The Podium Mindset:
+                            That's exactly why I pursued this career and founded The Podium Mindset:{' '}
+                            <br /> to provide the mental training I once desperately needed.
                         </p>
-                        <p>to provide the mental training I once desperately needed.</p>
                         <p>
                             Our one-on-one coaching is built around YOU (your sport, your
                             challenges, your goals). We focus on real mental skills that are
                             practical, personalized, and proven to hold up in critical moments.
                         </p>
-                        <button className="group relative overflow-hidden uppercase cursor-pointer flex items-center gap-2 mt-4 bg-theme-brandy p-2 text-black transition-colors duration-500 hover:text-white intro-button">
+                        <button className="group relative overflow-hidden uppercase cursor-pointer flex items-center gap-2 mt-4 bg-theme-brandy p-2 text-black transition-all duration-500 hover:text-white intro-button max-w-[200px] hover:border hover:border-theme-brandy">
                             {/* 1. The Content (Text) */}
                             <span className="relative z-11 pl-2 group-hover:text-white">
                                 our approach

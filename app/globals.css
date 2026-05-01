@@ -120,6 +120,7 @@
 @theme {
     --font-montserrat: var(--font-montserrat);
     --font-geistSans: var(--font-geistSans);
+    --font-roboto: var(--font-roboto);
     --color-theme-brandy: #b07d34;
 }
 

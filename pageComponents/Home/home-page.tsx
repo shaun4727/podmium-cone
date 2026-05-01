@@ -4,8 +4,10 @@ import { OurPrograms } from '@/pageComponents/Home/our-programs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
+import { FeedbackSection } from './feed-section';
 import { InspiredSection } from './inspired-section';
 import { IntroSection } from './intro-section';
+import ScrollVideoSection from './parallax-effect';
 import { SolutionSection } from './solution-section';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -79,7 +81,8 @@ export default function HomePageComponent() {
             <InspiredSection />
             <SolutionSection />
             <IntroSection />
-            <div className="min-h-screen" />
+            <FeedbackSection />
+            <ScrollVideoSection />
         </main>
     );
 }
