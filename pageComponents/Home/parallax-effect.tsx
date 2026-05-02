@@ -27,22 +27,45 @@ export default function ScrollVideoSection() {
                     end: 'bottom top',
                     scrub: 1.5,
                     pin: true,
+                    anticipatePin: 1,
                 },
             });
-
-            // Step 1: Fade out dark layer → reveal video
-            tl.to('#initial-bg-layer', {
+            tl.to('#black-layer', {
                 opacity: 0,
-                duration: 1.5,
-                ease: 'bounce.inOut',
+                duration: 1.2,
+                ease: 'power2.out',
             });
-            tl.to('#bg-layer', {
-                opacity: 1,
-                duration: 1.5,
+
+            // 🎯 Smooth black → transparent → white
+            tl.fromTo(
+                '#overlay-layer',
+                {
+                    backdropFilter: 'blur(0px)',
+                },
+                {
+                    backdropFilter: 'blur(6px)',
+                    duration: 3,
+                    ease: 'power2.out',
+                },
+                0
+            ).to('#overlay-layer', {
+                backgroundColor: 'rgba(255,255,255,1)',
+                duration: 1.2,
+                ease: 'power2.inOut',
             });
+            // Step 1: Fade out dark layer → reveal video
+            // tl.to('#initial-bg-layer', {
+            //     opacity: 0,
+            //     duration: 1.5,
+            //     ease: 'bounce.inOut',
+            // });
+            // tl.to('#bg-layer', {
+            //     opacity: 1,
+            //     duration: 1.5,
+            // });
 
             // Step 2: Slight zoom on video (premium feel)
-            tl.fromTo('#video', { scale: 1.2 }, { scale: 1, duration: 2 }, 0);
+            tl.fromTo('#video', { scale: 1.2 }, { scale: 1, duration: 2, ease: 'power2.out' }, 0);
 
             // Step 3: Fade in white overlay
             tl.to('#white-layer', {
@@ -55,7 +78,7 @@ export default function ScrollVideoSection() {
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative h-[99vh] pb-48">
+        <section ref={sectionRef} className="relative h-[100vh] pb-48">
             {/* Sticky container */}
             <div className="sticky top-0 h-screen overflow-hidden">
                 {/* 🎥 Video */}
@@ -70,7 +93,12 @@ export default function ScrollVideoSection() {
                 />
 
                 {/* 🖤 Initial dark background */}
-                <div id="initial-bg-layer" className="absolute inset-0 bg-black z-10" />
+                {/* <div id="initial-bg-layer" className="absolute inset-0 bg-black z-10" /> */}
+                <div
+                    id="black-layer"
+                    className="absolute inset-0 bg-black z-30 pointer-events-none"
+                />
+                <div id="overlay-layer" className="absolute inset-0 z-20 pointer-events-none" />
                 <div
                     id="bg-layer"
                     className="absolute inset-0 z-30 text-white px-4 md:px-12 py-12  flex gap-4 bg-black/50 pointer-events-auto"
@@ -108,7 +136,7 @@ export default function ScrollVideoSection() {
                 </div>
 
                 {/* 🤍 Final white overlay */}
-                <div id="white-layer" className="absolute inset-0 bg-blue-500 z-20 opacity-0" />
+                {/* <div id="white-layer" className="absolute inset-0 bg-blue-500 z-20 opacity-0" /> */}
             </div>
         </section>
     );
