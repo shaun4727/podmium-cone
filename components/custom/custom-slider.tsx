@@ -68,7 +68,7 @@ export const CustomSlickSlider = ({ children, visibleSlides = 3 }: SliderProps) 
                     size="icon"
                     onClick={handlePrev}
                     disabled={currentIndex === 0}
-                    className="pointer-events-auto p-6 border-0 bg-gray-800/60 backdrop-blur-sm hover:bg-theme-brandy hover:text-white transition-all rounded-none duration-300 disabled:opacity-30 shadow-lg"
+                    className="pointer-events-auto p-6 border-0 bg-gray-800/60 backdrop-blur-sm hover:bg-theme-brandy hover:text-white transition-all rounded-none duration-300 disabled:opacity-30 shadow-lg cursor-pointer"
                 >
                     <ChevronLeft className="w-6 h-6" />
                 </Button>

@@ -31,6 +31,11 @@ export default function ScrollVideoSection() {
             });
 
             // Step 1: Fade out dark layer → reveal video
+            tl.to('#initial-bg-layer', {
+                opacity: 0,
+                duration: 1.5,
+                ease: 'bounce.inOut',
+            });
             tl.to('#bg-layer', {
                 opacity: 1,
                 duration: 1.5,
@@ -50,13 +55,13 @@ export default function ScrollVideoSection() {
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative h-[99vh] py-48">
+        <section ref={sectionRef} className="relative h-[99vh] pb-48">
             {/* Sticky container */}
             <div className="sticky top-0 h-screen overflow-hidden">
                 {/* 🎥 Video */}
                 <video
                     id="video"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                     src="/videos/football.mp4"
                     autoPlay
                     muted
@@ -65,10 +70,10 @@ export default function ScrollVideoSection() {
                 />
 
                 {/* 🖤 Initial dark background */}
-                {/* <div id="bg-layer" className="absolute inset-0 bg-black z-10" /> */}
+                <div id="initial-bg-layer" className="absolute inset-0 bg-black z-10" />
                 <div
                     id="bg-layer"
-                    className="absolute inset-0 z-10 text-white px-4 md:px-12 py-12  flex gap-4 bg-black/50"
+                    className="absolute inset-0 z-30 text-white px-4 md:px-12 py-12  flex gap-4 bg-black/50 pointer-events-auto"
                 >
                     <div className="md:w-1/2 flex flex-col justify-center">
                         <div className="">
@@ -83,7 +88,7 @@ export default function ScrollVideoSection() {
                             </h1>
                         </div>
                     </div>
-                    <div className="md:w-1/2 ">
+                    <div className="md:w-1/2 flex flex-col justify-center">
                         <CustomSlickSlider visibleSlides={2}>
                             {slides.map((slide, i) => (
                                 <div

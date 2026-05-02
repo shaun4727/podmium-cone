@@ -4,7 +4,7 @@ import ScrollingText from './sub-intro/scrolling-text';
 
 export const IntroSection = () => {
     return (
-        <div className="text-white ">
+        <div className="text-white pb-24">
             <ScrollingText />
             <div className="px-4 md:px-12">
                 <h1 className="text-[4vw] uppercase font-montserrat font-semibold">

@@ -26,6 +26,8 @@ export const FeedbackSection = () => {
                 end: '+=120%', // gives enough scroll room
                 pin: true,
                 scrub: true,
+                pinSpacing: true,
+                anticipatePin: 1, // 👈 helps avoid layout glitches
             });
 
             // ✅ Dark overlay fade (main effect)
@@ -94,18 +96,18 @@ export const FeedbackSection = () => {
                 muted
                 playsInline
                 loop
-                className="absolute top-0 left-0 w-full h-full object-cover"
+                className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
             >
                 <source src="/videos/football.mp4" type="video/mp4" />
             </video>
-            <div ref={overlayRef} className="absolute inset-0 bg-black z-10" />
+            <div ref={overlayRef} className="absolute inset-0 bg-black z-10 pointer-events-none" />
             <div
                 ref={contentRef}
-                className="relative z-10 text-white px-4 md:px-12 py-12 mt-60 flex gap-4 bg-transparent"
+                className="relative z-30 text-white px-4 md:px-12 py-12 mt-60 flex gap-4 bg-transparent pointer-events-auto"
             >
                 <div className="md:w-1/2 flex flex-col justify-center">
                     <div className="">
-                        <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                        <h1 className="cursor-pointer text-[4vw] font-bold uppercase font-montserrat leading-none">
                             real results
                         </h1>
                         <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
