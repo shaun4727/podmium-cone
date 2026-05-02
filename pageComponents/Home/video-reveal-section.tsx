@@ -1,46 +1,143 @@
 'use client';
 
+import { CustomSlickSlider } from '@/components/custom/custom-slider';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
+const slides = [
+    { title: 'Peak Focus', color: 'bg-blue-500' },
+    { title: 'Mental Toughness', color: 'bg-theme-brandy' },
+    { title: 'Pressure Handling', color: 'bg-gray-800' },
+    { title: 'Goal Setting', color: 'bg-zinc-900' },
+];
 
-export const VideoRevealSection = () => {
-    const mainContainerRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
+export default function VideoRevealSection() {
+    const sectionRef = useRef(null);
 
-    useLayoutEffect(() => {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!containerRef.current) return;
+
+        const height = containerRef.current.scrollHeight;
+        containerRef.current.style.minHeight = `${height}px`;
+    }, []);
+
+    //     useEffect(() => {
+    //     if (!containerRef.current) return;
+
+    //     const resizeObserver = new ResizeObserver((entries) => {
+    //         for (let entry of entries) {
+    //             // Update the min-height based on the actual scrollHeight
+    //             const height = entry.target.scrollHeight;
+    //             containerRef.current!.style.minHeight = `${height}px`;
+    //         }
+    //     });
+
+    //     resizeObserver.observe(containerRef.current);
+
+    //     return () => resizeObserver.disconnect(); // Clean up to avoid memory leaks
+    // }, []);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
         const ctx = gsap.context(() => {
-            // Pinning the background while content scrolls
-            ScrollTrigger.create({
-                trigger: mainContainerRef.current,
-                start: 'top top',
-                end: 'bottom bottom',
-                pin: '#video-container', // Only pin the video/background
-                pinSpacing: false,
-            });
-
-            // Example animation: Fading the black layer as you scroll
-            gsap.to('#black-layer', {
-                opacity: 0,
+            const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: mainContainerRef.current,
+                    trigger: sectionRef.current,
                     start: 'top top',
-                    end: '50% top',
-                    scrub: true,
+                    end: '+=150%',
+                    scrub: 1.5,
+                    pin: true,
+                    anticipatePin: 1,
                 },
             });
-        }, mainContainerRef);
+
+            // Black fade out
+            tl.to('#black-layer', {
+                opacity: 0,
+                duration: 1.2,
+                ease: 'power2.out',
+            });
+
+            // Video zoom
+            tl.fromTo('#video', { scale: 1.2 }, { scale: 1, duration: 2, ease: 'power2.out' }, 0);
+
+            // 🔥 MOVE CONTENT (this fixes your issue)
+            tl.to(
+                '#bg-layer',
+                {
+                    ease: 'none',
+                    duration: 2,
+                },
+                0 // Starts at the exact beginning of the scroll trigger (0% progress)
+            );
+
+            // Optional finer control
+
+            tl.to(
+                '#company-info',
+                {
+                    y: -200, // Assuming you are moving it up
+                    ease: 'power3.inOut',
+                    duration: 1, // Increased duration slightly for a smoother "move up"
+                },
+                0.2
+                /**
+                 * POSITION PARAMETER: 0.2
+                 * In a scrubbed timeline, this creates a 'scroll offset'.
+                 * This animation starts after the user has scrolled 20% into the timeline
+                 * duration, allowing the #bg-layer to lead the transition first.
+                 */
+            );
+
+            // 🔥 Background to white - START AFTER THE MOVE
+            tl.fromTo(
+                '#bg-layer',
+                { backgroundColor: 'rgba(255,255,255,0)' },
+                {
+                    backgroundColor: 'rgba(255,255,255,1)',
+                    duration: 1,
+                    ease: 'none',
+                },
+                // Using '>' tells GSAP to start exactly when the previous animation (#company-info move) FINISHES
+                '>'
+            );
+
+            // Syncing the Authenticity Section opacity to fade out as the white background fades in
+            tl.to(
+                '.authenticity-section',
+                {
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'none',
+                },
+                '<' // Synchronizes with the background-to-white transition
+            );
+
+            tl.to(
+                '.company-detail',
+                {
+                    color: 'black',
+                    duration: 1,
+                    ease: 'none',
+                },
+                '<'
+            );
+        }, sectionRef);
 
         return () => ctx.revert();
     }, []);
 
     return (
-        <div ref={mainContainerRef} className="relative w-full">
-            {/* 🎥 Background Wrapper: Pins to viewport */}
-            <div id="video-container" className="sticky top-0 h-screen w-full overflow-hidden">
+        <section ref={sectionRef} className="relative w-full ">
+            {/* Sticky container */}
+            <div ref={containerRef} className="sticky top-0 h-full overflow-hidden">
+                {/* 🎥 Video */}
                 <video
                     id="video"
                     className="absolute inset-0 w-full h-full object-cover pointer-events-none"
@@ -50,45 +147,92 @@ export const VideoRevealSection = () => {
                     loop
                     playsInline
                 />
+
                 <div
                     id="black-layer"
                     className="absolute inset-0 bg-black z-30 pointer-events-none"
                 />
                 <div id="overlay-layer" className="absolute inset-0 z-20 pointer-events-none" />
-            </div>
-
-            {/* 📝 Content Layer: Height adapts to children automatically */}
-            <div
-                ref={contentRef}
-                className="relative z-40 text-white px-4 md:px-12 py-24 flex flex-col gap-20 bg-black/30"
-            >
-                <div className="flex flex-wrap md:flex-nowrap min-h-screen">
-                    <div className="w-full md:w-1/2 flex flex-col justify-center">
-                        <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
-                            real results
-                        </h1>
-                        <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
-                            from
-                        </h1>
-                        <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
-                            real athletes
-                        </h1>
+                <div
+                    id="bg-layer"
+                    className="absolute inset-0 z-30 h-full text-white px-4 md:px-12 pt-48  gap-4 bg-black/30 pointer-events-auto"
+                >
+                    <div className="flex authenticity-section">
+                        <div className="md:w-1/2 flex flex-col justify-center">
+                            <div className="">
+                                <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                                    real results
+                                </h1>
+                                <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                                    from
+                                </h1>
+                                <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                                    real athlets
+                                </h1>
+                            </div>
+                        </div>
+                        <div className="md:w-1/2 flex flex-col justify-center">
+                            <CustomSlickSlider visibleSlides={2}>
+                                {slides.map((slide, i) => (
+                                    <div
+                                        key={i}
+                                        className={`${slide.color} h-[400px] text-white p-8 flex flex-col justify-end `}
+                                    >
+                                        <span className="text-sm font-roboto opacity-60 uppercase tracking-widest">
+                                            Module 0{i + 1}
+                                        </span>
+                                        <h3 className="text-2xl font-bold font-montserrat">
+                                            {slide.title}
+                                        </h3>
+                                    </div>
+                                ))}
+                            </CustomSlickSlider>
+                        </div>
                     </div>
+                    <div id="company-info" className="bg-transparent mt-48">
+                        <div className="flex flex-col items-center">
+                            <Image
+                                src={`/pod-images/logo.svg`}
+                                width="30"
+                                height="30"
+                                alt="podmium-logo"
+                            />
+                            <h1
+                                className="text-3xl font-bold uppercase font-roboto 
+               bg-gradient-to-b from-[#e6cca9] from-[25%] to-[#a7885d] 
+               bg-clip-text text-transparent"
+                            >
+                                the podium
+                            </h1>
+                            <h1
+                                className="text-3xl font-bold uppercase font-roboto 
+               bg-gradient-to-b from-[#b49267] from-[25%] to-[#90754e] 
+               bg-clip-text text-transparent"
+                            >
+                                mindset
+                            </h1>
+                            <p className="text-[10px] font-bold uppercase font-roboto text-[#574021] ">
+                                train the brain - dominate the game
+                            </p>
 
-                    <div className="w-full md:w-1/2 flex flex-col justify-center"></div>
-                </div>
-
-                {/* Additional Content: The height will now grow naturally */}
-                <div className="flex justify-center pb-20">
-                    <Image
-                        src="/pod-images/logo.svg"
-                        width={400}
-                        height={400}
-                        alt="podmium-logo"
-                        className="opacity-50"
-                    />
+                            <div className="company-detail">
+                                <h1 className="text-[4vw] uppercase font-bold font-montserrat leading-none mt-12">
+                                    Personalized Coaching
+                                </h1>
+                                <h1 className="text-[4vw] uppercase font-bold font-montserrat leading-none">
+                                    for Game-Time Results
+                                </h1>
+                                <p className="text-2xl w-5xl text-center mt-6">
+                                    You shouldn’t have to figure this out alone. Our coaches walk
+                                    alongside you every step of the way. We check in before big
+                                    tournaments, help you implement strategies in real time, and
+                                    celebrate your wins along the way.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
-};
+}

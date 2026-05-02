@@ -6,8 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
 import { InspiredSection } from './inspired-section';
 import { IntroSection } from './intro-section';
-import ScrollVideoSection from './parallax-effect';
 import { SolutionSection } from './solution-section';
+import VideoRevealSection from './video-reveal-section';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -80,8 +80,7 @@ export default function HomePageComponent() {
             <InspiredSection />
             <SolutionSection />
             <IntroSection />
-
-            <ScrollVideoSection />
+            <VideoRevealSection />
         </main>
     );
 }
