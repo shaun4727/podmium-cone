@@ -3,6 +3,7 @@
 import { CustomSlickSlider } from '@/components/custom/custom-slider';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,6 +17,31 @@ const slides = [
 export default function ScrollVideoSection() {
     const sectionRef = useRef(null);
 
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!containerRef.current) return;
+
+        const height = containerRef.current.scrollHeight;
+        containerRef.current.style.minHeight = `${height}px`;
+    }, []);
+
+    //     useEffect(() => {
+    //     if (!containerRef.current) return;
+
+    //     const resizeObserver = new ResizeObserver((entries) => {
+    //         for (let entry of entries) {
+    //             // Update the min-height based on the actual scrollHeight
+    //             const height = entry.target.scrollHeight;
+    //             containerRef.current!.style.minHeight = `${height}px`;
+    //         }
+    //     });
+
+    //     resizeObserver.observe(containerRef.current);
+
+    //     return () => resizeObserver.disconnect(); // Clean up to avoid memory leaks
+    // }, []);
+
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
@@ -24,63 +50,61 @@ export default function ScrollVideoSection() {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: 'top top',
-                    end: 'bottom top',
+                    end: '+=150%',
                     scrub: 1.5,
                     pin: true,
                     anticipatePin: 1,
                 },
             });
+
+            // Black fade out
             tl.to('#black-layer', {
                 opacity: 0,
                 duration: 1.2,
                 ease: 'power2.out',
             });
 
-            // 🎯 Smooth black → transparent → white
-            tl.fromTo(
-                '#overlay-layer',
-                {
-                    backdropFilter: 'blur(0px)',
-                },
-                {
-                    backdropFilter: 'blur(6px)',
-                    duration: 3,
-                    ease: 'power2.out',
-                },
-                0
-            ).to('#overlay-layer', {
-                backgroundColor: 'rgba(255,255,255,1)',
-                duration: 1.2,
-                ease: 'power2.inOut',
-            });
-            // Step 1: Fade out dark layer → reveal video
-            // tl.to('#initial-bg-layer', {
-            //     opacity: 0,
-            //     duration: 1.5,
-            //     ease: 'bounce.inOut',
-            // });
-            // tl.to('#bg-layer', {
-            //     opacity: 1,
-            //     duration: 1.5,
-            // });
-
-            // Step 2: Slight zoom on video (premium feel)
+            // Video zoom
             tl.fromTo('#video', { scale: 1.2 }, { scale: 1, duration: 2, ease: 'power2.out' }, 0);
 
-            // Step 3: Fade in white overlay
-            tl.to('#white-layer', {
-                opacity: 1,
-                duration: 1,
-            });
+            // 🔥 MOVE CONTENT (this fixes your issue)
+            tl.to(
+                '#bg-layer',
+                {
+                    y: '-25%',
+                    ease: 'none',
+                    duration: 2,
+                },
+                0
+            );
+
+            // Optional finer control
+            tl.to(
+                '#company-info',
+                {
+                    y: '-40%',
+                    ease: 'none',
+                    duration: 2,
+                },
+                0.2
+            );
+
+            // Background to white
+            tl.fromTo(
+                '#bg-layer',
+                { backgroundColor: 'rgba(255,255,255,0)' },
+                { backgroundColor: 'rgba(255,255,255,1)', duration: 1 },
+                0.8
+            );
         }, sectionRef);
 
         return () => ctx.revert();
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative h-[100vh] pb-48">
+        <section ref={sectionRef} className="relative w-full ">
             {/* Sticky container */}
-            <div className="sticky top-0 h-screen overflow-hidden">
+            <div ref={containerRef} className="sticky top-0 h-full overflow-hidden">
                 {/* 🎥 Video */}
                 <video
                     id="video"
@@ -92,8 +116,6 @@ export default function ScrollVideoSection() {
                     playsInline
                 />
 
-                {/* 🖤 Initial dark background */}
-                {/* <div id="initial-bg-layer" className="absolute inset-0 bg-black z-10" /> */}
                 <div
                     id="black-layer"
                     className="absolute inset-0 bg-black z-30 pointer-events-none"
@@ -101,42 +123,81 @@ export default function ScrollVideoSection() {
                 <div id="overlay-layer" className="absolute inset-0 z-20 pointer-events-none" />
                 <div
                     id="bg-layer"
-                    className="absolute inset-0 z-30 text-white px-4 md:px-12 py-12  flex gap-4 bg-black/50 pointer-events-auto"
+                    className="absolute inset-0 z-30 text-white px-4 md:px-12 py-12  gap-4 bg-black/30 pointer-events-auto"
                 >
-                    <div className="md:w-1/2 flex flex-col justify-center">
-                        <div className="">
-                            <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
-                                real results
-                            </h1>
-                            <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
-                                from
-                            </h1>
-                            <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
-                                real athlets
-                            </h1>
+                    <div className="flex ">
+                        <div className="md:w-1/2 flex flex-col justify-center">
+                            <div className="">
+                                <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                                    real results
+                                </h1>
+                                <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                                    from
+                                </h1>
+                                <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                                    real athlets
+                                </h1>
+                            </div>
+                        </div>
+                        <div className="md:w-1/2 flex flex-col justify-center">
+                            <CustomSlickSlider visibleSlides={2}>
+                                {slides.map((slide, i) => (
+                                    <div
+                                        key={i}
+                                        className={`${slide.color} h-[400px] text-white p-8 flex flex-col justify-end `}
+                                    >
+                                        <span className="text-sm font-roboto opacity-60 uppercase tracking-widest">
+                                            Module 0{i + 1}
+                                        </span>
+                                        <h3 className="text-2xl font-bold font-montserrat">
+                                            {slide.title}
+                                        </h3>
+                                    </div>
+                                ))}
+                            </CustomSlickSlider>
                         </div>
                     </div>
-                    <div className="md:w-1/2 flex flex-col justify-center">
-                        <CustomSlickSlider visibleSlides={2}>
-                            {slides.map((slide, i) => (
-                                <div
-                                    key={i}
-                                    className={`${slide.color} h-[400px] text-white p-8 flex flex-col justify-end `}
-                                >
-                                    <span className="text-sm font-roboto opacity-60 uppercase tracking-widest">
-                                        Module 0{i + 1}
-                                    </span>
-                                    <h3 className="text-2xl font-bold font-montserrat">
-                                        {slide.title}
-                                    </h3>
-                                </div>
-                            ))}
-                        </CustomSlickSlider>
+                    <div id="company-info" className="bg-transparent mt-48">
+                        <div className="flex flex-col items-center">
+                            <Image
+                                src={`/pod-images/logo.svg`}
+                                width="30"
+                                height="30"
+                                alt="podmium-logo"
+                            />
+                            <h1
+                                className="text-3xl font-bold uppercase font-roboto 
+               bg-gradient-to-b from-[#e6cca9] from-[25%] to-[#a7885d] 
+               bg-clip-text text-transparent"
+                            >
+                                the podium
+                            </h1>
+                            <h1
+                                className="text-3xl font-bold uppercase font-roboto 
+               bg-gradient-to-b from-[#b49267] from-[25%] to-[#90754e] 
+               bg-clip-text text-transparent"
+                            >
+                                mindset
+                            </h1>
+                            <p className="text-[10px] font-bold uppercase font-roboto text-[#574021] ">
+                                train the brain - dominate the game
+                            </p>
+
+                            <h1 className="text-[4vw] uppercase font-bold font-montserrat leading-none mt-12">
+                                Personalized Coaching
+                            </h1>
+                            <h1 className="text-[4vw] uppercase font-bold font-montserrat leading-none">
+                                for Game-Time Results
+                            </h1>
+                            <p className="text-2xl w-5xl text-center mt-6">
+                                You shouldn’t have to figure this out alone. Our coaches walk
+                                alongside you every step of the way. We check in before big
+                                tournaments, help you implement strategies in real time, and
+                                celebrate your wins along the way.
+                            </p>
+                        </div>
                     </div>
                 </div>
-
-                {/* 🤍 Final white overlay */}
-                {/* <div id="white-layer" className="absolute inset-0 bg-blue-500 z-20 opacity-0" /> */}
             </div>
         </section>
     );

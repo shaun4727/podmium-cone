@@ -1,139 +1,92 @@
-import { CustomSlickSlider } from '@/components/custom/custom-slider';
+'use client';
+
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 import { useLayoutEffect, useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
-const slides = [
-    { title: 'Peak Focus', color: 'bg-blue-500' },
-    { title: 'Mental Toughness', color: 'bg-theme-brandy' },
-    { title: 'Pressure Handling', color: 'bg-gray-800' },
-    { title: 'Goal Setting', color: 'bg-zinc-900' },
-];
 
-export const FeedbackSection = () => {
-    const sectionRef = useRef<HTMLDivElement | null>(null);
-    const overlayRef = useRef<HTMLDivElement | null>(null);
-    const videoRef = useRef<HTMLVideoElement | null>(null);
-    const contentRef = useRef<HTMLDivElement | null>(null);
+export const VideoRevealSection = () => {
+    const mainContainerRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            // ✅ Pin the section
+            // Pinning the background while content scrolls
             ScrollTrigger.create({
-                trigger: sectionRef.current,
+                trigger: mainContainerRef.current,
                 start: 'top top',
-                end: '+=120%', // gives enough scroll room
-                pin: true,
-                scrub: true,
-                pinSpacing: true,
-                anticipatePin: 1, // 👈 helps avoid layout glitches
+                end: 'bottom bottom',
+                pin: '#video-container', // Only pin the video/background
+                pinSpacing: false,
             });
 
-            // ✅ Dark overlay fade (main effect)
-            gsap.fromTo(
-                overlayRef.current,
-                { opacity: 1 },
-                {
-                    opacity: 0.25, // keep slight darkness for readability
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: 'top top',
-                        end: 'bottom top',
-                        scrub: true,
-                    },
-                }
-            );
-
-            // ✅ Video subtle zoom-out (premium feel)
-            gsap.fromTo(
-                videoRef.current,
-                { scale: 1.15 },
-                {
-                    scale: 1,
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: 'top top',
-                        end: 'bottom top',
-                        scrub: true,
-                    },
-                }
-            );
-
-            // ✅ Content reveal animation
-            gsap.fromTo(
-                contentRef.current,
-                { opacity: 0, y: 80 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: 'top 60%',
-                        end: 'top 20%',
-                        scrub: true,
-                    },
-                }
-            );
-
-            // ✅ Ensure video plays when visible
-            ScrollTrigger.create({
-                trigger: sectionRef.current,
-                start: 'top center',
-                onEnter: () => videoRef.current?.play(),
+            // Example animation: Fading the black layer as you scroll
+            gsap.to('#black-layer', {
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: mainContainerRef.current,
+                    start: 'top top',
+                    end: '50% top',
+                    scrub: true,
+                },
             });
-        }, sectionRef);
+        }, mainContainerRef);
 
         return () => ctx.revert();
     }, []);
 
     return (
-        <div ref={sectionRef} className="relative h-[220vh] w-full overflow-hidden">
-            <video
-                ref={videoRef}
-                muted
-                playsInline
-                loop
-                className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
-            >
-                <source src="/videos/football.mp4" type="video/mp4" />
-            </video>
-            <div ref={overlayRef} className="absolute inset-0 bg-black z-10 pointer-events-none" />
+        <div ref={mainContainerRef} className="relative w-full">
+            {/* 🎥 Background Wrapper: Pins to viewport */}
+            <div id="video-container" className="sticky top-0 h-screen w-full overflow-hidden">
+                <video
+                    id="video"
+                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                    src="/videos/football.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                />
+                <div
+                    id="black-layer"
+                    className="absolute inset-0 bg-black z-30 pointer-events-none"
+                />
+                <div id="overlay-layer" className="absolute inset-0 z-20 pointer-events-none" />
+            </div>
+
+            {/* 📝 Content Layer: Height adapts to children automatically */}
             <div
                 ref={contentRef}
-                className="relative z-30 text-white px-4 md:px-12 py-12 mt-60 flex gap-4 bg-transparent pointer-events-auto"
+                className="relative z-40 text-white px-4 md:px-12 py-24 flex flex-col gap-20 bg-black/30"
             >
-                <div className="md:w-1/2 flex flex-col justify-center">
-                    <div className="">
-                        <h1 className="cursor-pointer text-[4vw] font-bold uppercase font-montserrat leading-none">
+                <div className="flex flex-wrap md:flex-nowrap min-h-screen">
+                    <div className="w-full md:w-1/2 flex flex-col justify-center">
+                        <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
                             real results
                         </h1>
                         <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
                             from
                         </h1>
                         <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
-                            real athlets
+                            real athletes
                         </h1>
                     </div>
+
+                    <div className="w-full md:w-1/2 flex flex-col justify-center"></div>
                 </div>
-                <div className="md:w-1/2 ">
-                    <CustomSlickSlider visibleSlides={2}>
-                        {slides.map((slide, i) => (
-                            <div
-                                key={i}
-                                className={`${slide.color} h-[400px] text-white p-8 flex flex-col justify-end `}
-                            >
-                                <span className="text-sm font-roboto opacity-60 uppercase tracking-widest">
-                                    Module 0{i + 1}
-                                </span>
-                                <h3 className="text-2xl font-bold font-montserrat">
-                                    {slide.title}
-                                </h3>
-                            </div>
-                        ))}
-                    </CustomSlickSlider>
+
+                {/* Additional Content: The height will now grow naturally */}
+                <div className="flex justify-center pb-20">
+                    <Image
+                        src="/pod-images/logo.svg"
+                        width={400}
+                        height={400}
+                        alt="podmium-logo"
+                        className="opacity-50"
+                    />
                 </div>
             </div>
         </div>

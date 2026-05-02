@@ -80,7 +80,7 @@ export default function HomePageComponent() {
             <InspiredSection />
             <SolutionSection />
             <IntroSection />
-            {/* <FeedbackSection /> */}
+
             <ScrollVideoSection />
         </main>
     );
