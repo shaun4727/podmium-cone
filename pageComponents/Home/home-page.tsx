@@ -7,7 +7,9 @@ import { useLayoutEffect, useRef } from 'react';
 import { InspiredSection } from './inspired-section';
 import { IntroSection } from './intro-section';
 import { SolutionSection } from './solution-section';
+import { TransformationStory } from './transformation-story';
 import VideoRevealSection from './video-reveal-section';
+import { WhyChooseUs } from './why-choose-us';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -81,6 +83,8 @@ export default function HomePageComponent() {
             <SolutionSection />
             <IntroSection />
             <VideoRevealSection />
+            <WhyChooseUs />
+            <TransformationStory />
         </main>
     );
 }

@@ -113,10 +113,10 @@ const HeroSection = () => {
                         ref={containerRef}
                         className="hero-text text-white font-montserrat md:w-1/2"
                     >
-                        <h1 className="split text-lg md:text-7xl font-montserrat uppercase font-bold">
+                        <h1 className="split text-lg md:text-[4vw] font-montserrat uppercase font-bold">
                             Train your brain.
                         </h1>
-                        <h1 className="split text-lg md:text-7xl font-montserrat uppercase font-bold">
+                        <h1 className="split text-lg md:text-[4vw]font-montserrat uppercase font-bold">
                             Dominate your game.
                         </h1>
                         <p className="split mt-6 text-sm md:text-lg">

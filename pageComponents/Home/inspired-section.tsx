@@ -79,7 +79,7 @@ export const InspiredSection = () => {
             <ParallaxImage />
             {/* Content Container */}
             <div className="w-full md:w-1/2 flex flex-col gap-[7px]">
-                <h1 className="text-6xl uppercase font-bold leading-none split-inspired-h1">
+                <h1 className="text-[4vw] uppercase font-bold leading-none split-inspired-h1">
                     Your talent is not the problem
                 </h1>
 

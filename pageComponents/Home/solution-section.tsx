@@ -73,11 +73,13 @@ export const SolutionSection = () => {
             ref={solutionSectionRef}
         >
             <div className="w-1/2">
-                <h1 className="split-h1 text-6xl uppercase font-bold leading-none">
+                <h1 className="split-h1 text-[4vw] uppercase font-bold leading-none">
                     we have been there.
                 </h1>
-                <h1 className="split-h1 text-6xl uppercase font-bold leading-none">and we will</h1>
-                <h1 className="split-h1 text-6xl uppercase font-bold leading-none">
+                <h1 className="split-h1 text-[4vw] uppercase font-bold leading-none">
+                    and we will
+                </h1>
+                <h1 className="split-h1 text-[4vw] uppercase font-bold leading-none">
                     help you through it.
                 </h1>
 
