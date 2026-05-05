@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export const WhyChooseUs = () => {
     return (
-        <div className="text-white px-4 md:px-12">
+        <div className="text-white px-4 md:px-12 py-20">
             <h1 className="text-[4vw] leading-none font-extrabold font-roboto uppercase text-center py-12">
                 why athlete choose <br /> podium mindset
             </h1>

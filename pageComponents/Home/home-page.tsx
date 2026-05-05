@@ -4,8 +4,10 @@ import { OurPrograms } from '@/pageComponents/Home/our-programs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
+import { FooterComponent } from './footer-component';
 import { InspiredSection } from './inspired-section';
 import { IntroSection } from './intro-section';
+import { ScheduleFreeIntroCall } from './schedule-free-intro-call';
 import { SolutionSection } from './solution-section';
 import { TransformationStory } from './transformation-story';
 import VideoRevealSection from './video-reveal-section';
@@ -85,6 +87,8 @@ export default function HomePageComponent() {
             <VideoRevealSection />
             <WhyChooseUs />
             <TransformationStory />
+            <ScheduleFreeIntroCall />
+            <FooterComponent />
         </main>
     );
 }

@@ -72,15 +72,15 @@ export const SolutionSection = () => {
             className="font-montserrat bg-white flex flex-col md:flex-row gap-16 px-4 md:px-12 py-12 items-center"
             ref={solutionSectionRef}
         >
-            <div className="w-1/2">
-                <h1 className="split-h1 text-[4vw] uppercase font-bold leading-none">
+            <div className="w-3/5">
+                <h1 className="split-h1 text-[4vw] uppercase font-bold  leading-none">
                     we have been there.
                 </h1>
                 <h1 className="split-h1 text-[4vw] uppercase font-bold leading-none">
-                    and we will
+                    and we will help
                 </h1>
                 <h1 className="split-h1 text-[4vw] uppercase font-bold leading-none">
-                    help you through it.
+                    you through it.
                 </h1>
 
                 <div className="mt-12 flex flex-col gap-6">
@@ -111,7 +111,7 @@ export const SolutionSection = () => {
                     </span>
                 </button>
             </div>
-            <div className="w-1/2">
+            <div className="w-2/5">
                 <ParallaxMaskedImage />
             </div>
         </div>
