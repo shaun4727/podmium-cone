@@ -143,7 +143,7 @@ export default function VideoRevealSection() {
                 {/* 🎥 Video */}
                 <video
                     id="video"
-                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                    className="absolute inset-0  object-cover pointer-events-none"
                     src="/videos/football.mp4"
                     autoPlay
                     muted
