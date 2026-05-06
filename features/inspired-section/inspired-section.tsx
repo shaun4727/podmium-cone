@@ -73,7 +73,7 @@ export const InspiredSection = () => {
     }, []);
     return (
         <section
-            className="flex flex-col-reverse md:flex-row font-montserrat bg-white gap-16 px-4 md:px-12 py-12 items-center "
+            className=" flex flex-col-reverse md:flex-row font-montserrat bg-white gap-16 px-4 md:px-12 py-12 items-center "
             ref={inspiredSectionRef}
         >
             <ParallaxImage />

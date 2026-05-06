@@ -219,11 +219,11 @@ export default function VideoRevealSection() {
                             </p>
 
                             <div className="company-detail ">
-                                <h1 className="text-[4vw] text-center w-sm md:w-5xl uppercase font-bold font-montserrat leading-none mt-12">
+                                <h1 className="text-3xl md:text-[4vw] text-center w-sm md:w-5xl uppercase font-bold font-montserrat leading-none mt-12">
                                     Personalized Coaching for Game-Time Results
                                 </h1>
 
-                                <p className="text-2xl w-sm md:w-5xl text-center mt-6">
+                                <p className="text-2xl w-sm md:w-5xl text-center text-roboto mt-6">
                                     You shouldn’t have to figure this out alone. Our coaches walk
                                     alongside you every step of the way. We check in before big
                                     tournaments, help you implement strategies in real time, and
@@ -232,7 +232,7 @@ export default function VideoRevealSection() {
                             </div>
                             <section className="bg-[#584e3f] mt-40 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 relative overflow-hidden">
                                 <div className="md:w-1/2 flex flex-col justify-center">
-                                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-15 -left-2 md:-left-4">
+                                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
                                         01
                                     </h1>
                                     <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
@@ -264,7 +264,7 @@ export default function VideoRevealSection() {
                             </section>
                             <section className="bg-[#e7d5bb] text-black mt-40 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 relative overflow-hidden">
                                 <div className="md:w-1/2 flex flex-col justify-center">
-                                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/75 absolute -top-3 md:-top-15 -left-2 md:-left-4">
+                                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/75 absolute -top-3 md:-top-5 -left-2 md:-left-4">
                                         02
                                     </h1>
                                     <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
@@ -296,7 +296,7 @@ export default function VideoRevealSection() {
                             </section>
                             <section className="bg-[#584e3f] mt-40 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 relative overflow-hidden">
                                 <div className="md:w-1/2 flex flex-col justify-center">
-                                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-15 -left-2 md:-left-4">
+                                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
                                         03
                                     </h1>
                                     <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">

@@ -1,10 +1,13 @@
 'use client';
 
+import { FooterComponent } from '@/components/layout/footer';
 import HeroSection from '@/features/hero-section/hero-section';
 import { InspiredSection } from '@/features/inspired-section/inspired-section';
 import { IntroSection } from '@/features/intro-section/intro-section';
 import { OurPrograms } from '@/features/our-programs/our-programs';
+import { ScheduleFreeIntroCall } from '@/features/schedule-call/schedule-free-intro-call';
 import { SolutionSection } from '@/features/solution-section/solution-section';
+import { TransformationStory } from '@/features/transformation-story/transformation-story';
 import VideoRevealSection from '@/features/video-reveal-section/video-reveal-section';
 import { WhyChooseUs } from '@/features/why-choose-us/why-choose-us';
 import gsap from 'gsap';
@@ -82,6 +85,9 @@ const page = () => {
             <IntroSection />
             <VideoRevealSection />
             <WhyChooseUs />
+            <TransformationStory />
+            <ScheduleFreeIntroCall />
+            <FooterComponent />
         </main>
     );
 };

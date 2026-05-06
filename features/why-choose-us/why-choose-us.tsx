@@ -3,10 +3,10 @@ import Image from 'next/image';
 export const WhyChooseUs = () => {
     return (
         <div className="text-white px-4 md:px-12 py-20">
-            <h1 className="text-[4vw] leading-none font-extrabold font-roboto uppercase text-center py-12">
+            <h1 className="text-4xl md:text-[4vw] leading-none font-extrabold font-roboto uppercase text-center py-12">
                 why athlete choose <br /> podium mindset
             </h1>
-            <div className="choose-section grid grid-rows-6 grid-flow-col grid-cols-3 gap-4">
+            <div className="choose-section flex flex-col md:grid md:grid-rows-6 md:grid-flow-col md:grid-cols-3 gap-4">
                 <div className="choose-card relative row-span-3 col-auto bg-[#201f1e] flex items-end">
                     <div className="p-10">
                         <h1 className="uppercase text-3xl font-montserrat font-bold mb-4 ">
@@ -92,7 +92,7 @@ export const WhyChooseUs = () => {
                         />
                     </div>
                 </div>
-                <div className="award-winner row-span-6 col-auto bg-amber-500 ">
+                <div className="hidden md:block award-winner row-span-6 col-auto bg-amber-500 ">
                     <Image
                         src={`/pod-images/intense-focus.jpg`}
                         width="500"
