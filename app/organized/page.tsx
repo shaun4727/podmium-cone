@@ -6,6 +6,7 @@ import { IntroSection } from '@/features/intro-section/intro-section';
 import { OurPrograms } from '@/features/our-programs/our-programs';
 import { SolutionSection } from '@/features/solution-section/solution-section';
 import VideoRevealSection from '@/features/video-reveal-section/video-reveal-section';
+import { WhyChooseUs } from '@/features/why-choose-us/why-choose-us';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
@@ -80,6 +81,7 @@ const page = () => {
 
             <IntroSection />
             <VideoRevealSection />
+            <WhyChooseUs />
         </main>
     );
 };

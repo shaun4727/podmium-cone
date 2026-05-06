@@ -1,10 +1,10 @@
 'use client';
 
+import { CustomButton } from '@/components/common/animated-button';
 import { CustomSlickSlider } from '@/components/custom/custom-slider';
 import { useIsMobile } from '@/provider/viewport-context';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
@@ -218,7 +218,7 @@ export default function VideoRevealSection() {
                                 train the brain - dominate the game
                             </p>
 
-                            <div className="company-detail w-100">
+                            <div className="company-detail ">
                                 <h1 className="text-[4vw] text-center w-sm md:w-5xl uppercase font-bold font-montserrat leading-none mt-12">
                                     Personalized Coaching for Game-Time Results
                                 </h1>
@@ -232,7 +232,7 @@ export default function VideoRevealSection() {
                             </div>
                             <section className="bg-[#584e3f] mt-40 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 relative overflow-hidden">
                                 <div className="md:w-1/2 flex flex-col justify-center">
-                                    <h1 className="text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-15 -left-4">
+                                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-15 -left-2 md:-left-4">
                                         01
                                     </h1>
                                     <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
@@ -244,28 +244,13 @@ export default function VideoRevealSection() {
                                     <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
                                         coaching
                                     </h1>
-                                    <p className="md:w-2/3 mt-10">
+                                    <p className="md:w-2/3 mt-10 mb-5">
                                         Personalized sessions focused on your specific challenges,
                                         whether it's negative self-talk, performance anxiety, or
                                         fear of failure. We build practical mental skills you can
                                         use immediately to maximize your full potential.
                                     </p>
-                                    <button className="group w-[225px] relative overflow-hidden uppercase cursor-pointer flex items-center gap-2 mt-4 bg-black p-2 text-white transition-colors duration-500 hover:text-white solution-button opacity-0 invisible">
-                                        {/* 1. The Content (Text) */}
-                                        <span className="relative z-11 pl-2 group-hover:text-white">
-                                            See our program
-                                        </span>
-
-                                        {/* 2. The Arrow Wrapper + Expanding Background */}
-                                        <span className="relative z-10 flex items-center justify-center bg-theme-brandy text-white  p-1 transition-colors duration-500 group-hover:bg-transparent">
-                                            <ArrowUpRight size={16} />
-
-                                            {/* This div is the magic: It scales from the icon to cover the button */}
-                                            <div className="absolute inset-0 bg-theme-brandy -z-10 scale-0 rounded-full transition-transform duration-500 ease-in-out group-hover:scale-[40]" />
-
-                                            <div className="absolute inset-0 bg-black scale-0 p-1 -z-10  transition-all duration-300 ease-in-out group-hover:scale-100" />
-                                        </span>
-                                    </button>
+                                    <CustomButton text="See our program" />
                                 </div>
                                 <div className="md:w-1/2">
                                     <Image
@@ -277,44 +262,29 @@ export default function VideoRevealSection() {
                                     />
                                 </div>
                             </section>
-                            <section className="bg-[#e7d5bb] text-black mt-40 font-montserrat flex gap-12 p-15 relative overflow-hidden">
-                                <div className="w-1/2 flex flex-col justify-center">
-                                    <h1 className="text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-15 -left-4">
-                                        01
+                            <section className="bg-[#e7d5bb] text-black mt-40 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 relative overflow-hidden">
+                                <div className="md:w-1/2 flex flex-col justify-center">
+                                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/75 absolute -top-3 md:-top-15 -left-2 md:-left-4">
+                                        02
                                     </h1>
-                                    <h1 className="text-[3vw] uppercase font-bold leading-none">
+                                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
                                         one-on-one mental
                                     </h1>
-                                    <h1 className="text-[3vw] uppercase font-bold leading-none">
+                                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
                                         performance
                                     </h1>
-                                    <h1 className="text-[3vw] uppercase font-bold leading-none">
+                                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
                                         coaching
                                     </h1>
-                                    <p className="w-2/3 mt-10">
+                                    <p className="md:w-2/3 mt-10 mb-5">
                                         Personalized sessions focused on your specific challenges,
                                         whether it's negative self-talk, performance anxiety, or
                                         fear of failure. We build practical mental skills you can
                                         use immediately to maximize your full potential.
                                     </p>
-                                    <button className="group w-[225px] relative overflow-hidden uppercase cursor-pointer flex items-center gap-2 mt-4 bg-black p-2 text-white transition-colors duration-500 hover:text-white solution-button opacity-0 invisible">
-                                        {/* 1. The Content (Text) */}
-                                        <span className="relative z-11 pl-2 group-hover:text-white">
-                                            See our program
-                                        </span>
-
-                                        {/* 2. The Arrow Wrapper + Expanding Background */}
-                                        <span className="relative z-10 flex items-center justify-center bg-theme-brandy text-white  p-1 transition-colors duration-500 group-hover:bg-transparent">
-                                            <ArrowUpRight size={16} />
-
-                                            {/* This div is the magic: It scales from the icon to cover the button */}
-                                            <div className="absolute inset-0 bg-theme-brandy -z-10 scale-0 rounded-full transition-transform duration-500 ease-in-out group-hover:scale-[40]" />
-
-                                            <div className="absolute inset-0 bg-black scale-0 p-1 -z-10  transition-all duration-300 ease-in-out group-hover:scale-100" />
-                                        </span>
-                                    </button>
+                                    <CustomButton text="See our program" />
                                 </div>
-                                <div className="w-1/2">
+                                <div className="md:w-1/2">
                                     <Image
                                         src="/pod-images/study.webp"
                                         width="400"
@@ -324,44 +294,29 @@ export default function VideoRevealSection() {
                                     />
                                 </div>
                             </section>
-                            <section className="bg-[#584e3f] mt-40 font-montserrat  flex gap-12 p-15 relative overflow-hidden">
-                                <div className="w-1/2 flex flex-col justify-center">
-                                    <h1 className="text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-15 -left-4">
-                                        01
+                            <section className="bg-[#584e3f] mt-40 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 relative overflow-hidden">
+                                <div className="md:w-1/2 flex flex-col justify-center">
+                                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-15 -left-2 md:-left-4">
+                                        03
                                     </h1>
-                                    <h1 className="text-[3vw] uppercase font-bold leading-none">
+                                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
                                         one-on-one mental
                                     </h1>
-                                    <h1 className="text-[3vw] uppercase font-bold leading-none">
+                                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
                                         performance
                                     </h1>
-                                    <h1 className="text-[3vw] uppercase font-bold leading-none">
+                                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
                                         coaching
                                     </h1>
-                                    <p className="w-2/3 mt-10">
+                                    <p className="md:w-2/3 mt-10 mb-5">
                                         Personalized sessions focused on your specific challenges,
                                         whether it's negative self-talk, performance anxiety, or
                                         fear of failure. We build practical mental skills you can
                                         use immediately to maximize your full potential.
                                     </p>
-                                    <button className="group w-[225px] relative overflow-hidden uppercase cursor-pointer flex items-center gap-2 mt-4 bg-black p-2 text-white transition-colors duration-500 hover:text-white solution-button opacity-0 invisible">
-                                        {/* 1. The Content (Text) */}
-                                        <span className="relative z-11 pl-2 group-hover:text-white">
-                                            See our program
-                                        </span>
-
-                                        {/* 2. The Arrow Wrapper + Expanding Background */}
-                                        <span className="relative z-10 flex items-center justify-center bg-theme-brandy text-white  p-1 transition-colors duration-500 group-hover:bg-transparent">
-                                            <ArrowUpRight size={16} />
-
-                                            {/* This div is the magic: It scales from the icon to cover the button */}
-                                            <div className="absolute inset-0 bg-theme-brandy -z-10 scale-0 rounded-full transition-transform duration-500 ease-in-out group-hover:scale-[40]" />
-
-                                            <div className="absolute inset-0 bg-black scale-0 p-1 -z-10  transition-all duration-300 ease-in-out group-hover:scale-100" />
-                                        </span>
-                                    </button>
+                                    <CustomButton text="See our program" />
                                 </div>
-                                <div className="w-1/2">
+                                <div className="md:w-1/2">
                                     <Image
                                         src="/pod-images/playing.jpg"
                                         width="400"
