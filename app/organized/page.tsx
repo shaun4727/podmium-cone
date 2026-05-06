@@ -65,7 +65,7 @@ const page = () => {
             <div ref={heroRef} className="z-0">
                 <HeroSection />
             </div>
-            <div className="absolute top-100 left-2.5 md:left-[10%] pointer-events-none flex justify-center items-end z-10">
+            <div className="absolute top-100 left-8 md:left-[10%] pointer-events-none flex justify-center items-end z-10">
                 <div
                     ref={programsWrapperRef}
                     className="bg-white pointer-events-auto md:shadow-2xl flex-1 px-1 md:px-15"
