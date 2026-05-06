@@ -1,3 +1,4 @@
+import { ViewportProvider } from '@/provider/viewport-context';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Montserrat, Roboto } from 'next/font/google';
 import './globals.css';
@@ -36,7 +37,9 @@ export default function RootLayout({
             lang="en"
             className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${roboto.variable} h-full antialiased`}
         >
-            <body className="min-h-full flex flex-col">{children}</body>
+            <body className="min-h-full flex flex-col">
+                <ViewportProvider>{children}</ViewportProvider>
+            </body>
         </html>
     );
 }

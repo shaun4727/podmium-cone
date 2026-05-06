@@ -5,6 +5,7 @@ import { InspiredSection } from '@/features/inspired-section/inspired-section';
 import { IntroSection } from '@/features/intro-section/intro-section';
 import { OurPrograms } from '@/features/our-programs/our-programs';
 import { SolutionSection } from '@/features/solution-section/solution-section';
+import VideoRevealSection from '@/features/video-reveal-section/video-reveal-section';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
@@ -62,7 +63,7 @@ const page = () => {
     }, []);
 
     return (
-        <main ref={containerRef} className="relative bg-black ">
+        <main ref={containerRef} className="relative bg-black overflow-hidden">
             <div ref={heroRef} className="z-0">
                 <HeroSection />
             </div>
@@ -78,6 +79,7 @@ const page = () => {
             <SolutionSection />
 
             <IntroSection />
+            <VideoRevealSection />
         </main>
     );
 };
