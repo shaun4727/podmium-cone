@@ -2,6 +2,7 @@
 
 import HeroSection from '@/features/hero-section/hero-section';
 import { InspiredSection } from '@/features/inspired-section/inspired-section';
+import { IntroSection } from '@/features/intro-section/intro-section';
 import { OurPrograms } from '@/features/our-programs/our-programs';
 import { SolutionSection } from '@/features/solution-section/solution-section';
 import gsap from 'gsap';
@@ -65,7 +66,7 @@ const page = () => {
             <div ref={heroRef} className="z-0">
                 <HeroSection />
             </div>
-            <div className="absolute top-100 left-8 md:left-[10%] pointer-events-none flex justify-center items-end z-10">
+            <div className="absolute top-100 left-1/2 -translate-x-[53%]   md:left-[10%] md:translate-x-0 md:w-auto pointer-events-none flex justify-center items-end z-10">
                 <div
                     ref={programsWrapperRef}
                     className="bg-white pointer-events-auto md:shadow-2xl flex-1 px-1 md:px-15"
@@ -75,6 +76,8 @@ const page = () => {
             </div>
             <InspiredSection />
             <SolutionSection />
+
+            <IntroSection />
         </main>
     );
 };
