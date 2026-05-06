@@ -40,7 +40,7 @@ const page = () => {
                 programsWrapperRef.current,
                 {
                     y: '100vh',
-                    scale: 0.5, // Start at 50% size
+                    scale: 1, // Start at 50% size
                     transformOrigin: 'top center',
                     borderRadius: '20px',
                     opacity: 1,
@@ -65,10 +65,10 @@ const page = () => {
             <div ref={heroRef} className="z-0">
                 <HeroSection />
             </div>
-            <div className="absolute top-100 left-4 md:left-[10%] pointer-events-none flex justify-center items-end z-10">
+            <div className="absolute top-100 left-2.5 md:left-[10%] pointer-events-none flex justify-center items-end z-10">
                 <div
                     ref={programsWrapperRef}
-                    className="bg-white pointer-events-auto md:shadow-2xl flex-1 px-4 md:px-15"
+                    className="bg-white pointer-events-auto md:shadow-2xl flex-1 px-1 md:px-15"
                 >
                     <OurPrograms />
                 </div>
