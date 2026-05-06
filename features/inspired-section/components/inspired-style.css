@@ -17,6 +17,16 @@
     .parallax {
         min-height: 35vh;
     }
+
+    .parallax .image-depressed {
+        animation-timeline: scroll(root);
+
+        /* Change 2: 'cover' is the standard for parallax to ensure 
+       the movement spans the entire time the element is visible */
+        animation-range: entry 0% exit 100%;
+        --parallax-speed: 1;
+        transform: translateZ(0);
+    }
 }
 @keyframes parallax-anim {
     from {
