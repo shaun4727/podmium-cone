@@ -1,3 +1,4 @@
+import { Navbar } from '@/components/layout/navbar';
 import { ViewportProvider } from '@/provider/viewport-context';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Montserrat, Roboto } from 'next/font/google';
@@ -38,7 +39,10 @@ export default function RootLayout({
             className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${roboto.variable} h-full antialiased`}
         >
             <body className="min-h-full flex flex-col">
-                <ViewportProvider>{children}</ViewportProvider>
+                <ViewportProvider>
+                    <Navbar />
+                    {children}
+                </ViewportProvider>
             </body>
         </html>
     );
