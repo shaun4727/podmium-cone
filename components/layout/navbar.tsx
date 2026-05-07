@@ -3,7 +3,7 @@ import { Button } from '../ui/button';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,6 +27,28 @@ export const Navbar = () => {
             });
         });
         return () => ctx.revert();
+    }, []);
+
+    useEffect(() => {
+        // 1. Stop the browser from aggressively jumping on reload
+        if (typeof window !== 'undefined') {
+            window.history.scrollRestoration = 'manual';
+        }
+
+        // 2. Clear GSAP's scroll memory to prevent conflicting math
+        ScrollTrigger.clearScrollMemory();
+
+        // 3. Tell GSAP to refresh its calculations AFTER the entire window loads
+        // (including all images, fonts, and stylesheets)
+        const handleLoad = () => {
+            ScrollTrigger.refresh();
+        };
+
+        window.addEventListener('load', handleLoad);
+
+        return () => {
+            window.removeEventListener('load', handleLoad);
+        };
     }, []);
 
     return (
