@@ -1,0 +1,38 @@
+.parallax {
+    position: relative;
+    z-index: 1;
+    min-height: 55vh;
+    width: 100%;
+    overflow: hidden;
+}
+/* Target the wrapper div Next.js creates around 'fill' images */
+.parallax .image-depressed {
+    animation: parallax-anim linear;
+    animation-timeline: scroll(root);
+    animation-range: entry 0% exit 100%;
+    will-change: transform;
+    --parallax-speed: 10;
+}
+@media (max-width: 768px) {
+    .parallax {
+        min-height: 35vh;
+    }
+
+    .parallax .image-depressed {
+        animation-timeline: scroll(root);
+
+        /* Change 2: 'cover' is the standard for parallax to ensure 
+       the movement spans the entire time the element is visible */
+        animation-range: entry 0% exit 100%;
+        --parallax-speed: 1;
+        transform: translateZ(0);
+    }
+}
+@keyframes parallax-anim {
+    from {
+        transform: translateY(0) scale(1); /* Scale up to prevent white gaps */
+    }
+    to {
+        transform: translateY(calc(var(--parallax-speed) * 120px)) scale(1);
+    }
+}
