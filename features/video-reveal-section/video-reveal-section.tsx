@@ -183,28 +183,33 @@ export default function VideoRevealSection() {
                 '+=0.5'
             );
 
-            // const videoRevealTl4 = gsap.timeline({
-            //     scrollTrigger: {
-            //         trigger: companyDetailSectionRef.current,
-            //         start: 'top top',
-            //         end: '+=10%', // Matches the hero pinning duration
-            //     },
-            // });
+            // 1. Initialize SplitText
+            const videoRevealTl4Split = new SplitText('.company-detail-split', {
+                type: 'lines, words, chars',
+                linesClass: 'overflow-hidden',
+            });
 
-            // const videoRevealTl4Split = new SplitText('.company-detail-split', {
-            //     type: 'lines, words, chars',
-            //     linesClass: 'overflow-hidden',
-            // });
+            // 2. Direct Tween with ScrollTrigger
+            gsap.from(videoRevealTl4Split.chars, {
+                yPercent: 100,
+                autoAlpha: 0, // Combines opacity: 0 and visibility: hidden
+                duration: 1, // Added explicit duration for the character animation
+                stagger: {
+                    amount: 0.8, // Total time spread across all characters
+                    from: 'start',
+                },
+                delay: 0.2, // Optional: slight delay after the trigger is hit
 
-            // videoRevealTl4.from(videoRevealTl4Split.chars, {
-            //     yPercent: 100,
-            //     autoAlpha: 0, // Combines opacity: 0 and visibility: hidden
-            //     stagger: {
-            //         amount: 0.8, // Total time spread across all characters
-            //         from: 'start',
-            //     },
-            //     delay: 0.2,
-            // });
+                // 3. Attach ScrollTrigger directly to the tween
+                scrollTrigger: {
+                    trigger: companyDetailSectionRef.current,
+                    start: 'top -30%',
+
+                    // Tells the animation to play when you scroll down to it.
+                    // play none none none (Play once) OR play none none reverse (Play/Reverse on scroll)
+                    toggleActions: 'play none none none',
+                },
+            });
         }, sectionRef);
 
         return () => ctx.revert();
