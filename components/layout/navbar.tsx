@@ -24,7 +24,7 @@ export const Navbar = () => {
                     // FIX 2: Remove toggleActions entirely
                     scrub: 1,
                 },
-            }).to();
+            });
         });
         return () => ctx.revert();
     }, []);
