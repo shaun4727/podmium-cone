@@ -5,6 +5,7 @@ import { CustomSlickSlider } from '@/components/custom/custom-slider';
 import { useIsMobile } from '@/provider/viewport-context';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
@@ -18,6 +19,8 @@ const slides = [
 
 export default function VideoRevealSection() {
     const sectionRef = useRef(null);
+    const videoRevealCoachingSectionRef = useRef(null);
+    const companyDetailSectionRef = useRef(null);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const isMobile = useIsMobile();
@@ -131,6 +134,77 @@ export default function VideoRevealSection() {
                 },
                 '<'
             );
+
+            const tl2 = gsap.timeline({
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top top',
+                    end: '+=10%', // Matches the hero pinning duration
+                },
+            });
+
+            const split = new SplitText('.reveal-split', {
+                type: 'lines, words, chars',
+                linesClass: 'overflow-hidden',
+            });
+
+            tl2.from(split.chars, {
+                yPercent: 100,
+                autoAlpha: 0, // Combines opacity: 0 and visibility: hidden
+                stagger: {
+                    amount: 0.8, // Total time spread across all characters
+                    from: 'start',
+                },
+                delay: 0.2,
+            });
+
+            // //video reveal section
+            const videoRevealTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: videoRevealCoachingSectionRef.current,
+                    start: 'top top',
+                    end: '+=150%',
+                    scrub: 1,
+                    anticipatePin: 1,
+                },
+            });
+
+            // // Black fade out
+            videoRevealTl.fromTo(
+                '.video-reveal-detail',
+                {
+                    opacity: 0,
+                },
+                {
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: 'none',
+                },
+                '+=0.5'
+            );
+
+            // const videoRevealTl4 = gsap.timeline({
+            //     scrollTrigger: {
+            //         trigger: companyDetailSectionRef.current,
+            //         start: 'top top',
+            //         end: '+=10%', // Matches the hero pinning duration
+            //     },
+            // });
+
+            // const videoRevealTl4Split = new SplitText('.company-detail-split', {
+            //     type: 'lines, words, chars',
+            //     linesClass: 'overflow-hidden',
+            // });
+
+            // videoRevealTl4.from(videoRevealTl4Split.chars, {
+            //     yPercent: 100,
+            //     autoAlpha: 0, // Combines opacity: 0 and visibility: hidden
+            //     stagger: {
+            //         amount: 0.8, // Total time spread across all characters
+            //         from: 'start',
+            //     },
+            //     delay: 0.2,
+            // });
         }, sectionRef);
 
         return () => ctx.revert();
@@ -163,13 +237,13 @@ export default function VideoRevealSection() {
                     <div className="flex flex-col md:flex-row authenticity-section">
                         <div className="md:w-1/2 flex flex-col justify-center">
                             <div className="">
-                                <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                                <h1 className="reveal-split text-[4vw] font-bold uppercase font-montserrat leading-none">
                                     real results
                                 </h1>
-                                <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                                <h1 className="reveal-split text-[4vw] font-bold uppercase font-montserrat leading-none">
                                     from
                                 </h1>
-                                <h1 className="text-[4vw] font-bold uppercase font-montserrat leading-none">
+                                <h1 className="reveal-split text-[4vw] font-bold uppercase font-montserrat leading-none">
                                     real athlets
                                 </h1>
                             </div>
@@ -193,37 +267,41 @@ export default function VideoRevealSection() {
                         </div>
                     </div>
                     <div id="company-info" className="bg-transparent mt-48">
-                        <div className="flex flex-col items-center">
+                        <div
+                            className="flex flex-col items-center"
+                            ref={videoRevealCoachingSectionRef}
+                        >
                             <Image
                                 src={`/pod-images/logo.svg`}
                                 width="30"
                                 height="30"
+                                className="video-reveal-detail"
                                 alt="podmium-logo"
                             />
                             <h1
-                                className="text-3xl font-bold uppercase font-roboto 
+                                className="video-reveal-detail text-3xl font-bold uppercase font-roboto 
                bg-gradient-to-b from-[#e6cca9] from-[25%] to-[#a7885d] 
                bg-clip-text text-transparent"
                             >
                                 the podium
                             </h1>
                             <h1
-                                className="text-3xl font-bold uppercase font-roboto 
+                                className="video-reveal-detail text-3xl font-bold uppercase font-roboto 
                bg-gradient-to-b from-[#b49267] from-[25%] to-[#90754e] 
                bg-clip-text text-transparent"
                             >
                                 mindset
                             </h1>
-                            <p className="text-[10px] font-bold uppercase font-roboto text-[#574021] ">
+                            <p className="video-reveal-detail text-[10px] font-bold uppercase font-roboto text-[#574021] ">
                                 train the brain - dominate the game
                             </p>
 
-                            <div className="company-detail ">
-                                <h1 className="text-3xl md:text-[4vw] text-center w-sm md:w-5xl uppercase font-bold font-montserrat leading-none mt-12">
+                            <div className="company-detail" ref={companyDetailSectionRef}>
+                                <h1 className="company-detail-split text-3xl md:text-[4vw] text-center w-sm md:w-5xl uppercase font-bold font-montserrat leading-none mt-12">
                                     Personalized Coaching for Game-Time Results
                                 </h1>
 
-                                <p className="text-2xl w-sm md:w-5xl text-center text-roboto mt-6">
+                                <p className="company-detail-split text-2xl w-sm md:w-5xl text-center text-roboto mt-6">
                                     You shouldn’t have to figure this out alone. Our coaches walk
                                     alongside you every step of the way. We check in before big
                                     tournaments, help you implement strategies in real time, and
