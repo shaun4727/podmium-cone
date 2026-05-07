@@ -3,6 +3,7 @@
 import { ArrowUpRight } from 'lucide-react';
 
 import { MarqueeText } from '@/components/common/marquee-component';
+import { Navbar } from '@/components/layout/navbar';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { useLayoutEffect, useRef } from 'react';
@@ -72,7 +73,7 @@ const HeroSection = () => {
 
             <div className="absolute  inset-0  ">
                 <section className="mx-4 md:mx-12 mt-48 flex flex-col gap-24 md:gap-48">
-                    {/* <Navbar /> */}
+                    <Navbar />
                     <div
                         ref={containerRef}
                         className="hero-text text-white font-montserrat md:w-1/2"
