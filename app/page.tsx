@@ -1,7 +1,7 @@
 'use client';
 
-import { LayeredPinning } from '@/components/custom/layered-pinning';
 import { FooterComponent } from '@/components/layout/footer';
+import { ProgramFeature } from '@/features/company-program-feature/program-feature';
 import HeroSection from '@/features/hero-section/hero-section';
 import { InspiredSection } from '@/features/inspired-section/inspired-section';
 import { IntroSection } from '@/features/intro-section/intro-section';
@@ -85,8 +85,8 @@ const page = () => {
 
             <IntroSection />
             <VideoRevealSection />
+            <ProgramFeature />
             <WhyChooseUs />
-            <LayeredPinning />
             <TransformationStory />
             <ScheduleFreeIntroCall />
             <FooterComponent />
