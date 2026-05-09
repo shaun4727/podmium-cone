@@ -1,44 +1,48 @@
 import { CustomButton } from '@/components/common/animated-button';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import { useLayoutEffect, useRef } from 'react';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export const ProgramFeature = () => {
-    const companyDetailProgramRef = useRef<HTMLDivElement>(null);
+    const ProgramRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
-        // Register plugin inside the effect to be safe with Next.js SSR
         gsap.registerPlugin(ScrollTrigger);
 
         const ctx = gsap.context(() => {
-            // 1. Select all cards
-            const cards = gsap.utils.toArray<HTMLElement>('.stack-card');
+            const layeredPinTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ProgramRef.current,
 
-            cards.forEach((card, index) => {
-                const isLastCard = index === cards.length - 1;
+                    // FIX 1: The Start Line
+                    // 'top 80%' means: Wait until the top of your container has scrolled 20%
+                    // of the way UP your screen before starting the animation.
+                    start: 'top 100%',
 
-                // 2. We don't pin the last card so the footer/next section can scroll normally
-                if (!isLastCard) {
-                    ScrollTrigger.create({
-                        trigger: card,
-                        // Pin exactly when the top of the card hits the top of the viewport
-                        start: 'top top',
-                        // Math: Stay pinned for exactly the height of the remaining cards
-                        end: () => `+=${(cards.length - 1 - index) * window.innerHeight}`,
-                        pin: true,
-                        // CRITICAL: This allows the next card in the DOM to overlap it
-                        pinSpacing: false,
-                        anticipatePin: 1,
-                        invalidateOnRefresh: true,
-                    });
-                }
+                    // FIX 2: The End Line
+                    // If you want a bigger gap between start and end (making the animation slower
+                    // and smoother), increase the end distance.
+                    end: '+=200%',
+
+                    scrub: 1,
+                    markers: true, // Keep this on to visually see the new gap!
+                },
             });
-        }, companyDetailProgramRef);
+
+            layeredPinTl.from('.stack-card', {
+                yPercent: -400,
+                ease: 'power2.out',
+            });
+        }, ProgramRef);
 
         return () => ctx.revert();
     }, []);
 
     return (
-        <div ref={companyDetailProgramRef} className="relative bg-white w-full min-h-screen py-30">
+        <div ref={ProgramRef} className=" bg-white w-full min-h-screen py-30">
             <section className="stack-card stack-card-1 bg-[#584e3f] font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 relative overflow-hidden text-white">
                 <div className="md:w-1/2 flex flex-col justify-center">
                     <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
