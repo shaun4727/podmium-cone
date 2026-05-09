@@ -12,31 +12,7 @@ export const ProgramFeature = () => {
     useLayoutEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
-        const ctx = gsap.context(() => {
-            const layeredPinTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: ProgramRef.current,
-
-                    // FIX 1: The Start Line
-                    // 'top 80%' means: Wait until the top of your container has scrolled 20%
-                    // of the way UP your screen before starting the animation.
-                    start: 'top 100%',
-
-                    // FIX 2: The End Line
-                    // If you want a bigger gap between start and end (making the animation slower
-                    // and smoother), increase the end distance.
-                    end: '+=200%',
-
-                    scrub: 1,
-                    markers: true, // Keep this on to visually see the new gap!
-                },
-            });
-
-            layeredPinTl.from('.stack-card', {
-                yPercent: -400,
-                ease: 'power2.out',
-            });
-        }, ProgramRef);
+        const ctx = gsap.context(() => {}, ProgramRef);
 
         return () => ctx.revert();
     }, []);
