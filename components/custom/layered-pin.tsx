@@ -1,85 +1,219 @@
-'use client';
-
-import { gsap } from 'gsap';
+import { CustomButton } from '@/components/common/animated-button';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { useLayoutEffect, useRef } from 'react';
 
-// Register the ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
-export default function LayeredPinnedSections() {
-    const containerRef = useRef(null);
-    // 1. Tell the ref it is an array of HTMLElements
-    const panelsRef = useRef<HTMLElement[]>([]);
+export const ProgramFeature = () => {
+    const ProgramRef = useRef<HTMLDivElement>(null);
 
-    // 2. The addToPanels function will now work with the correct type
-    const addToPanels = (el: HTMLElement | null) => {
-        if (el && !panelsRef.current.includes(el)) {
-            panelsRef.current.push(el);
-        }
-    };
-    useEffect(() => {
-        // Make sure we have panels to animate
-        if (panelsRef.current.length === 0) return;
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            const cards = gsap.utils.toArray<HTMLElement>('.stack-card');
 
-        // Create a ScrollTrigger context to easily clean up later
-        let ctx = gsap.context(() => {
-            // Loop through each panel except the last one
-            panelsRef.current.forEach((panel, i) => {
-                ScrollTrigger.create({
-                    trigger: panel,
-                    start: 'top top', // Pin when the top of the panel hits the top of the viewport
-                    pin: true,
-                    pinSpacing: false, // Prevents GSAP from adding extra space, allowing the next section to overlap
-                    // Optional: Add a slight shadow or darken effect as it gets covered
-                    animation: gsap.to(panel, {
-                        opacity: 0.5,
-                        ease: 'none',
-                    }),
-                    scrub: true,
-                });
+            // -----------------------------------
+            // INITIAL LAYER SETUP
+            // -----------------------------------
+
+            gsap.set(cards, {
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                force3D: true,
+                willChange: 'transform',
+                backfaceVisibility: 'hidden',
             });
-        }, containerRef);
 
-        // Cleanup function: Kills all GSAP animations when the component unmounts
+            gsap.set('.stack-card-1', {
+                zIndex: 1,
+            });
+
+            gsap.set('.stack-card-2', {
+                zIndex: 2,
+                yPercent: 100,
+                scale: 1,
+            });
+
+            gsap.set('.stack-card-3', {
+                zIndex: 3,
+                yPercent: 100,
+                scale: 1,
+            });
+
+            // -----------------------------------
+            // TIMELINE
+            // -----------------------------------
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ProgramRef.current,
+                    start: 'top top',
+                    end: '+=300%',
+                    pin: true,
+                    scrub: 1.5,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    markers: false,
+                },
+            });
+
+            // CARD 2 ENTER
+            tl.to(
+                '.stack-card-2',
+                {
+                    yPercent: 0,
+                    duration: 1,
+                    ease: 'none',
+                },
+                0
+            );
+
+            // CARD 1 DEPTH
+            tl.to(
+                '.stack-card-1',
+                {
+                    scale: 0.92,
+                    opacity: 0.35,
+                    duration: 1,
+                    ease: 'none',
+                },
+                0
+            );
+
+            // CARD 3 ENTER
+            tl.to(
+                '.stack-card-3',
+                {
+                    yPercent: 0,
+                    duration: 1,
+                    ease: 'none',
+                },
+                1
+            );
+
+            // CARD 2 DEPTH
+            tl.to(
+                '.stack-card-2',
+                {
+                    scale: 0.92,
+                    opacity: 0.35,
+                    duration: 1,
+                    ease: 'none',
+                },
+                1
+            );
+        }, ProgramRef);
+
         return () => ctx.revert();
     }, []);
 
     return (
-        <div ref={containerRef} className="relative w-full overflow-hidden">
-            {/* Intro section just to give us space to scroll down to the effect */}
-            <section className="flex h-screen items-center justify-center bg-gray-100 text-black">
-                <h1 className="text-4xl font-bold">Scroll down for Layered Sections</h1>
+        <div
+            ref={ProgramRef}
+            className="pinned-layer relative bg-white px-4 md:px-12 min-h-screen py-30 overflow-hidden"
+            style={{ height: '100vh' }}
+        >
+            <section className="stack-card-1 bg-[#584e3f] font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15  overflow-hidden text-white relative ">
+                <div className="md:w-1/2 flex flex-col justify-center">
+                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
+                        01
+                    </h1>
+                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                        one-on-one mental
+                    </h1>
+                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                        performance
+                    </h1>
+                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                        coaching
+                    </h1>
+                    <p className="md:w-2/3 mt-10 mb-5">
+                        Personalized sessions focused on your specific challenges, whether it's
+                        negative self-talk, performance anxiety, or fear of failure. We build
+                        practical mental skills you can use immediately to maximize your full
+                        potential.
+                    </p>
+                    <CustomButton text="See our program" />
+                </div>
+                <div className="md:w-1/2">
+                    <Image
+                        src="/pod-images/study-2.jpeg"
+                        width="400"
+                        height="400"
+                        alt="thumbnail"
+                        className="w-6xl"
+                    />
+                </div>
             </section>
-
-            {/* Panel 1 */}
-            <section
-                ref={addToPanels}
-                className="flex h-screen items-center justify-center bg-blue-600 text-white shadow-xl"
-            >
-                <h2 className="text-6xl font-black">Layer 1</h2>
+            <section className="stack-card stack-card-2 bg-[#e7d5bb] text-black font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden relative z-3">
+                <div className="md:w-1/2 flex flex-col justify-center">
+                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
+                        02
+                    </h1>
+                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                        one-on-one mental
+                    </h1>
+                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                        performance
+                    </h1>
+                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                        coaching
+                    </h1>
+                    <p className="md:w-2/3 mt-10 mb-5">
+                        Personalized sessions focused on your specific challenges, whether it's
+                        negative self-talk, performance anxiety, or fear of failure. We build
+                        practical mental skills you can use immediately to maximize your full
+                        potential.
+                    </p>
+                    <CustomButton text="See our program" />
+                </div>
+                <div className="md:w-1/2">
+                    <Image
+                        src="/pod-images/study.webp"
+                        width="400"
+                        height="400"
+                        alt="thumbnail"
+                        className="w-6xl"
+                    />
+                </div>
             </section>
-
-            {/* Panel 2 */}
-            <section
-                ref={addToPanels}
-                className="flex h-screen items-center justify-center bg-purple-600 text-white shadow-xl"
-            >
-                <h2 className="text-6xl font-black">Layer 2</h2>
-            </section>
-
-            {/* Panel 3 */}
-            <section
-                ref={addToPanels}
-                className="flex h-screen items-center justify-center bg-orange-500 text-white shadow-xl"
-            >
-                <h2 className="text-6xl font-black">Layer 3</h2>
-            </section>
-
-            {/* Final Outro section to scroll past the effect */}
-            <section className="flex h-[150vh] items-center justify-center bg-gray-900 text-white z-10 relative">
-                <h2 className="text-4xl font-bold">End of Parallax</h2>
+            <section className="stack-card stack-card-3 bg-[#584e3f] font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden text-white relative z-6">
+                <div className="md:w-1/2 flex flex-col justify-center">
+                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
+                        03
+                    </h1>
+                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                        one-on-one mental
+                    </h1>
+                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                        performance
+                    </h1>
+                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                        coaching
+                    </h1>
+                    <p className="md:w-2/3 mt-10 mb-5">
+                        Personalized sessions focused on your specific challenges, whether it's
+                        negative self-talk, performance anxiety, or fear of failure. We build
+                        practical mental skills you can use immediately to maximize your full
+                        potential.
+                    </p>
+                    <CustomButton text="See our program" />
+                </div>
+                <div className="md:w-1/2">
+                    <Image
+                        src="/pod-images/playing.jpg"
+                        width="400"
+                        height="400"
+                        alt="thumbnail"
+                        className="w-6xl"
+                    />
+                </div>
             </section>
         </div>
     );
-}
+};
