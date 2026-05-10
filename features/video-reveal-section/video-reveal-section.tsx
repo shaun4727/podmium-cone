@@ -120,7 +120,7 @@ export default function VideoRevealSection() {
                     className="absolute inset-0  object-cover pointer-events-none pinned-video-item"
                 />
 
-                <div id="bg-layer" className=" relative z-4">
+                <div id="bg-layer" className="px-4 md:px-12 relative z-4">
                     <div className="extra-layer  w-full min-h-screen"></div>
                     <div className="flex flex-col md:flex-row  authenticity-section min-h-screen">
                         <div className="md:w-1/2 flex flex-col justify-center">
