@@ -2,38 +2,19 @@ import { CustomButton } from '@/components/common/animated-button';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const ProgramFeature = () => {
     const ProgramRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: ProgramRef.current,
-                    // Requirement 1: Pin right when the section hits the top of the viewport
-                    start: 'top top',
-
-                    // Artificial scroll runway.
-                    // +=200% gives exactly 1 screen height of scroll for Card 2, and 1 for Card 3.
-                    end: '+=200%',
-
-                    pin: true,
-                    scrub: 1, // Ties the animation to the scrollbar
-                    // markers: true, // Uncomment to debug
-                },
-            });
-        }, ProgramRef);
-
-        return () => ctx.revert();
-    }, []);
-
     return (
-        <div ref={ProgramRef} className=" bg-white px-4 md:px-12 w-full min-h-screen py-30">
-            <section className="stack-card stack-card-1 bg-[#584e3f] font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 relative overflow-hidden text-white">
+        <div
+            ref={ProgramRef}
+            className="pinned-layer relative bg-white px-4 md:px-12  min-h-screen py-30 overflow-hidden"
+        >
+            <section className="stack-card-1 bg-[#584e3f] font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15  overflow-hidden text-white relative ">
                 <div className="md:w-1/2 flex flex-col justify-center">
                     <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
                         01
@@ -65,7 +46,7 @@ export const ProgramFeature = () => {
                     />
                 </div>
             </section>
-            <section className="stack-card stack-card-2 bg-[#e7d5bb] text-black mt-20 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden relative">
+            <section className="stack-card stack-card-2 bg-[#e7d5bb] text-black font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden relative">
                 <div className="md:w-1/2 flex flex-col justify-center">
                     <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
                         02
@@ -97,7 +78,7 @@ export const ProgramFeature = () => {
                     />
                 </div>
             </section>
-            <section className="stack-card stack-card-3 bg-[#584e3f] mt-20 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 relative overflow-hidden text-white">
+            <section className="stack-card stack-card-3 bg-[#584e3f] font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden text-white relative">
                 <div className="md:w-1/2 flex flex-col justify-center">
                     <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
                         03
