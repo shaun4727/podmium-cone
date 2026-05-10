@@ -4,6 +4,7 @@ import { CustomSlickSlider } from '@/components/custom/custom-slider';
 import { useIsMobile } from '@/provider/viewport-context';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
@@ -55,51 +56,165 @@ export default function VideoRevealSection() {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: 'top top',
-                    end: '+=220%',
+                    end: '+=150%',
                     scrub: 1.5,
-                    pin: '.pinned-video-item',
+                    pin: true,
                     anticipatePin: 1,
                 },
             });
-            // 1. Initial State: Semi-transparent black (Video is visible)
-            // Adjust the 0.6 (60%) to make it more or less see-through
-            tl.set('#bg-layer', { backgroundColor: 'rgba(0, 0, 0, 1)' });
 
-            // 2. Phase One: Transition to a lighter "tint"
-            // This keeps the video visible but shifts the mood
+            // Black fade out
+            tl.to('#black-layer', {
+                opacity: 0,
+                duration: 1.2,
+                ease: 'power2.out',
+            });
+
+            // Video zoom
+            tl.fromTo('#video', { scale: 1.2 }, { scale: 1, duration: 2, ease: 'power2.out' }, 0);
+
+            // 🔥 MOVE CONTENT (this fixes your issue)
             tl.to(
                 '#bg-layer',
                 {
-                    backgroundColor: 'rgba(26, 26, 26, 0.7)',
-                    duration: 0.3,
                     ease: 'none',
+                    duration: 2,
                 },
-                0
+                0 // Starts at the exact beginning of the scroll trigger (0% progress)
             );
 
-            // 3. Phase Two: Hold that transparency
-            tl.to('#bg-layer', {
-                backgroundColor: 'rgba(26, 26, 26, 0.3)',
-                duration: 1,
-            });
+            // Optional finer control
 
-            // 4. Final Phase: Transition to SOLID White
-            // This fades out the video as the background becomes fully opaque white
-            tl.to('#bg-layer', {
-                backgroundColor: 'rgba(255, 255, 255, 1)',
-                duration: 1.3,
-                ease: 'power2.inOut',
-            });
+            tl.to(
+                '#company-info',
+                {
+                    y: -200, // Assuming you are moving it up
+                    ease: 'power3.inOut',
+                    duration: 1, // Increased duration slightly for a smoother "move up"
+                },
+                0.2
+                /**
+                 * POSITION PARAMETER: 0.2
+                 * In a scrubbed timeline, this creates a 'scroll offset'.
+                 * This animation starts after the user has scrolled 20% into the timeline
+                 * duration, allowing the #bg-layer to lead the transition first.
+                 */
+            );
 
-            // Optional: Sync text fade out
+            // 🔥 Background to white - START AFTER THE MOVE
+            tl.fromTo(
+                '#bg-layer',
+                { backgroundColor: 'rgba(255,255,255,0)' },
+                {
+                    backgroundColor: 'rgba(255,255,255,1)',
+                    duration: 1,
+                    ease: 'none',
+                },
+                // Using '>' tells GSAP to start exactly when the previous animation (#company-info move) FINISHES
+                '>'
+            );
+
+            // Syncing the Authenticity Section opacity to fade out as the white background fades in
             tl.to(
                 '.authenticity-section',
                 {
                     opacity: 0,
-                    duration: 0.5,
+                    duration: 1,
+                    ease: 'none',
                 },
-                '>-0.5'
+                '<' // Synchronizes with the background-to-white transition
             );
+
+            tl.to(
+                '.company-detail',
+                {
+                    color: 'black',
+                    duration: 1,
+                    ease: 'none',
+                },
+                '<'
+            );
+
+            // video reveal ends
+
+            // personalized coaching section text animation starts
+            const tl2 = gsap.timeline({
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top top',
+                    end: '+=10%', // Matches the hero pinning duration
+                },
+            });
+
+            const split = new SplitText('.reveal-split', {
+                type: 'lines, words, chars',
+                linesClass: 'overflow-hidden',
+            });
+
+            tl2.from(split.chars, {
+                yPercent: 100,
+                autoAlpha: 0, // Combines opacity: 0 and visibility: hidden
+                stagger: {
+                    amount: 0.8, // Total time spread across all characters
+                    from: 'start',
+                },
+                delay: 0.2,
+            });
+
+            // //video reveal section
+            const videoRevealTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: videoRevealCoachingSectionRef.current,
+                    start: 'top top',
+                    end: '+=150%',
+                    scrub: 1,
+                    anticipatePin: 1,
+                },
+            });
+
+            // // Black fade out
+            videoRevealTl.fromTo(
+                '.video-reveal-detail',
+                {
+                    opacity: 0,
+                },
+                {
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: 'none',
+                },
+                '+=0.5'
+            );
+
+            // 1. Initialize SplitText
+            const videoRevealTl4Split = new SplitText('.company-detail-split', {
+                type: 'lines, words, chars',
+                linesClass: 'overflow-hidden',
+            });
+
+            // 2. Direct Tween with ScrollTrigger
+            gsap.from(videoRevealTl4Split.chars, {
+                yPercent: 100,
+                autoAlpha: 0, // Combines opacity: 0 and visibility: hidden
+                duration: 1, // Added explicit duration for the character animation
+                stagger: {
+                    amount: 0.8, // Total time spread across all characters
+                    from: 'start',
+                },
+                delay: 0.2, // Optional: slight delay after the trigger is hit
+
+                // 3. Attach ScrollTrigger directly to the tween
+                scrollTrigger: {
+                    trigger: companyDetailSectionRef.current,
+                    start: 'top -30%',
+
+                    // Tells the animation to play when you scroll down to it.
+                    // play none none none (Play once) OR play none none reverse (Play/Reverse on scroll)
+                    toggleActions: 'play none none none',
+                },
+            });
+
+            // personalized coaching section text animation ends
         }, sectionRef);
 
         return () => ctx.revert();
@@ -108,23 +223,30 @@ export default function VideoRevealSection() {
     return (
         <section ref={sectionRef} className="relative w-full ">
             {/* Sticky container */}
-            <div ref={containerRef}>
+            <div ref={containerRef} className="sticky top-0 h-full overflow-hidden">
                 {/* 🎥 Video */}
                 <video
                     id="video"
+                    className="absolute inset-0  object-cover pointer-events-none"
                     src="/videos/football.mp4"
                     autoPlay
                     muted
                     loop
                     playsInline
-                    className="absolute inset-0  object-cover pointer-events-none pinned-video-item"
                 />
 
-                <div id="bg-layer" className="px-4 md:px-12 relative z-4">
-                    <div className="extra-layer  w-full min-h-screen"></div>
-                    <div className="flex flex-col md:flex-row  authenticity-section min-h-screen">
+                <div
+                    id="black-layer"
+                    className="absolute inset-0 bg-black z-30 pointer-events-none"
+                />
+                <div id="overlay-layer" className="absolute inset-0 z-20 pointer-events-none" />
+                <div
+                    id="bg-layer"
+                    className="absolute inset-0 z-30 h-full text-white px-4 md:px-12 pt-48  gap-4 bg-black/30 pointer-events-auto"
+                >
+                    <div className="flex flex-col md:flex-row authenticity-section">
                         <div className="md:w-1/2 flex flex-col justify-center">
-                            <div className="text-white">
+                            <div className="">
                                 <h1 className="reveal-split text-[4vw] font-bold uppercase font-montserrat leading-none">
                                     real results
                                 </h1>
@@ -154,7 +276,7 @@ export default function VideoRevealSection() {
                             </CustomSlickSlider>
                         </div>
                     </div>
-                    <div id="company-info" className="mt-48 min-h-screen">
+                    <div id="company-info" className="bg-transparent relative z-20 mt-48">
                         <div
                             className="flex flex-col items-center"
                             ref={videoRevealCoachingSectionRef}

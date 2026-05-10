@@ -1,30 +1,104 @@
+import gsap from 'gsap';
+import { SplitText } from 'gsap/SplitText';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
+import { useLayoutEffect, useRef } from 'react';
 import ScrollingText from './components/scrolling-text';
 
+gsap.registerPlugin(SplitText);
+
 export const IntroSection = () => {
+    const introContainerRef = useRef(null);
+
+    useLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: introContainerRef.current,
+                    start: 'top top',
+                    end: '+=10%', // Matches the hero pinning duration
+                },
+            });
+
+            // 1. Initialize the SplitText
+            const split = new SplitText('.split-intro', {
+                type: 'lines, words, chars',
+                linesClass: 'overflow-hidden',
+            });
+
+            // 2. Create the Timeline
+
+            // 3. Add animations to the timeline
+            tl.from(split.chars, {
+                yPercent: 100,
+                autoAlpha: 0, // Combines opacity: 0 and visibility: hidden
+                stagger: {
+                    amount: 0.8, // Total time spread across all characters
+                    from: 'start',
+                },
+                delay: 0.2,
+            })
+                .fromTo(
+                    '.first-formal-image',
+                    {
+                        // Top-Left, Top-Right, Bottom-Right (squashed), Bottom-Left (squashed)
+                        clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+                        opacity: 0,
+                    },
+                    {
+                        // Top-Left, Top-Right, Bottom-Right (full), Bottom-Left (full)
+                        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                        opacity: 1,
+                        duration: 1.5,
+                        ease: 'power4.inOut',
+                    },
+                    '-=0.4'
+                )
+                .fromTo(
+                    '.second-formal-image',
+                    {
+                        // Start State: All points are squashed at the BOTTOM (Y = 100%)
+                        // Top-Left (pushed down), Top-Right (pushed down), Bottom-Right, Bottom-Left
+                        clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
+                        opacity: 0,
+                    },
+                    {
+                        // End State: Fully revealed standard rectangle
+                        // Top-Left (at top), Top-Right (at top), Bottom-Right, Bottom-Left
+                        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                        opacity: 1,
+                        duration: 1.5,
+                        ease: 'power4.inOut',
+                    },
+                    '-=0.4'
+                );
+        }, introContainerRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
         <div className="text-white pb-24">
             <ScrollingText />
-            <div className="px-4 md:px-12">
-                <h1 className="text-[4vw] uppercase font-montserrat font-semibold">
+            <div className="px-4 md:px-12" ref={introContainerRef}>
+                <h1 className="split-intro text-[4vw] uppercase font-montserrat font-semibold">
                     meet the founder,
                 </h1>
-                <h2 className="text-[4vw] capitalize font-semibold">tony stark.</h2>
+                <h2 className="split-intro text-[4vw] capitalize font-semibold">tony stark.</h2>
                 <div className="flex flex-col md:flex-row gap-12">
                     <Image
                         src="/pod-images/fomal-image.jpg"
                         width="500"
                         height="600"
                         alt="formal image"
-                        className="w-94"
+                        className="w-94 first-formal-image"
                     />
                     <Image
                         src="/pod-images/playing-volleyball.jpg"
                         width="500"
                         height="600"
                         alt="formal image"
-                        className="hidden md:block w-100 h-140"
+                        className="hidden md:block w-100 h-140 second-formal-image"
                     />
                     <div className="font-roboto w-94 flex flex-col gap-6 md:mt-24">
                         {/* <p className="first-letter:text-5xl first-letter:font-bold first-letter:mr-3 first-letter:float-left  first-letter:text-theme-brandy"> */}
