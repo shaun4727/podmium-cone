@@ -1,217 +1,117 @@
+'use client';
+
 import { CustomButton } from '@/components/common/animated-button';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
+// Register the ScrollTrigger plugin
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 }
 
-export const ProgramFeature = () => {
-    const ProgramRef = useRef<HTMLDivElement>(null);
+const cardsData = [
+    { id: 1, title: 'Card One', color: '#584e3f', text: '#ffffff' },
+    { id: 2, title: 'Card Two', color: '#e7d5bb', text: '#000000' },
+    { id: 3, title: 'Card Three', color: '#584e3f', text: '#ffffff' },
+];
 
-    useLayoutEffect(() => {
+export default function LayeredProgram() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+    useEffect(() => {
         const ctx = gsap.context(() => {
-            const cards = gsap.utils.toArray<HTMLElement>('.stack-card');
-
-            // -----------------------------------
-            // INITIAL LAYER SETUP
-            // -----------------------------------
-
-            gsap.set(cards, {
-                position: 'absolute',
-                left: '12',
-                right: '12',
-                willChange: 'transform',
-                backfaceVisibility: 'hidden',
-            });
-
-            gsap.set('.stack-card-1', {
-                zIndex: 1,
-            });
-
-            gsap.set('.stack-card-2', {
-                zIndex: 2,
-                yPercent: 100,
-                scale: 1,
-            });
-
-            gsap.set('.stack-card-3', {
-                zIndex: 3,
-                yPercent: 100,
-                scale: 1,
-            });
-
-            // -----------------------------------
-            // TIMELINE
-            // -----------------------------------
-
+            // Create a timeline mapped to the scroll position of the container
             const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: ProgramRef.current,
+                    trigger: containerRef.current,
                     start: 'top top',
-                    end: '+=200%',
-                    pin: true,
-                    scrub: 1.5,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                    markers: false,
+                    end: `+=${cardsData.length * 100}%`, // Extend scroll distance based on card count
+                    scrub: true, // Smooth scrubbing
+                    pin: true, // Pin the container in place while scrolling
                 },
             });
 
-            // CARD 2 ENTER
-            tl.to(
-                '.stack-card-2',
-                {
-                    yPercent: 0,
-                    duration: 1,
-                    ease: 'none',
-                },
-                0
-            );
+            // Animate each card (except the first one, which is already in place)
+            cardsRef.current.forEach((card, index) => {
+                if (index === 0) return;
 
-            // CARD 1 DEPTH
-            tl.to(
-                '.stack-card-1',
-                {
-                    scale: 0.92,
-                    opacity: 0.35,
-                    duration: 1,
-                    ease: 'none',
-                },
-                0
-            );
+                tl.fromTo(
+                    card,
+                    { y: () => window.innerHeight }, // Start below the screen
+                    {
+                        y: 0,
+                        duration: 1,
+                        ease: 'none',
+                        // Optional: Add a slight scale down to previous cards for depth
+                    },
+                    index * 0.5 // Overlap the animations slightly
+                );
+            });
+        }, containerRef);
 
-            // CARD 3 ENTER
-            tl.to(
-                '.stack-card-3',
-                {
-                    yPercent: 0,
-                    duration: 1,
-                    ease: 'none',
-                },
-                1
-            );
-
-            // CARD 2 DEPTH
-            tl.to(
-                '.stack-card-2',
-                {
-                    scale: 0.92,
-                    opacity: 0.35,
-                    duration: 1,
-                    ease: 'none',
-                },
-                1
-            );
-        }, ProgramRef);
-
-        return () => ctx.revert();
+        return () => ctx.revert(); // Clean up GSAP instances on unmount
     }, []);
 
     return (
-        <div
-            ref={ProgramRef}
-            className="pinned-layer relative bg-white px-4 md:px-12 min-h-screen py-30 overflow-hidden"
-            style={{ height: '100vh' }}
-        >
-            <section className="stack-card-1 bg-[#584e3f] font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15  overflow-hidden text-white relative ">
-                <div className="md:w-1/2 flex flex-col justify-center">
-                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
-                        01
-                    </h1>
-                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
-                        one-on-one mental
-                    </h1>
-                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
-                        performance
-                    </h1>
-                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
-                        coaching
-                    </h1>
-                    <p className="md:w-2/3 mt-10 mb-5">
-                        Personalized sessions focused on your specific challenges, whether it's
-                        negative self-talk, performance anxiety, or fear of failure. We build
-                        practical mental skills you can use immediately to maximize your full
-                        potential.
-                    </p>
-                    <CustomButton text="See our program" />
-                </div>
-                <div className="md:w-1/2">
-                    <Image
-                        src="/pod-images/study-2.jpeg"
-                        width="400"
-                        height="400"
-                        alt="thumbnail"
-                        className="w-6xl"
-                    />
-                </div>
-            </section>
-            <section className="stack-card stack-card-2 bg-[#e7d5bb] text-black font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden relative z-3">
-                <div className="md:w-1/2 flex flex-col justify-center">
-                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
-                        02
-                    </h1>
-                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
-                        one-on-one mental
-                    </h1>
-                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
-                        performance
-                    </h1>
-                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
-                        coaching
-                    </h1>
-                    <p className="md:w-2/3 mt-10 mb-5">
-                        Personalized sessions focused on your specific challenges, whether it's
-                        negative self-talk, performance anxiety, or fear of failure. We build
-                        practical mental skills you can use immediately to maximize your full
-                        potential.
-                    </p>
-                    <CustomButton text="See our program" />
-                </div>
-                <div className="md:w-1/2">
-                    <Image
-                        src="/pod-images/study.webp"
-                        width="400"
-                        height="400"
-                        alt="thumbnail"
-                        className="w-6xl"
-                    />
-                </div>
-            </section>
-            <section className="stack-card stack-card-3 bg-[#584e3f] font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden text-white relative z-6">
-                <div className="md:w-1/2 flex flex-col justify-center">
-                    <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
-                        03
-                    </h1>
-                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
-                        one-on-one mental
-                    </h1>
-                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
-                        performance
-                    </h1>
-                    <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
-                        coaching
-                    </h1>
-                    <p className="md:w-2/3 mt-10 mb-5">
-                        Personalized sessions focused on your specific challenges, whether it's
-                        negative self-talk, performance anxiety, or fear of failure. We build
-                        practical mental skills you can use immediately to maximize your full
-                        potential.
-                    </p>
-                    <CustomButton text="See our program" />
-                </div>
-                <div className="md:w-1/2">
-                    <Image
-                        src="/pod-images/playing.jpg"
-                        width="400"
-                        height="400"
-                        alt="thumbnail"
-                        className="w-6xl"
-                    />
-                </div>
-            </section>
+        <div className="relative w-full bg-white pb-15 overflow-hidden">
+            {/* Spacer to allow scrolling before the animation starts */}
+
+            {/* The Pinned Container */}
+            <div
+                ref={containerRef}
+                className="h-screen w-full relative flex items-center justify-center overflow-hidden"
+            >
+                {cardsData.map((card, index) => (
+                    <div
+                        key={card.id}
+                        ref={(el) => {
+                            cardsRef.current[index] = el;
+                        }}
+                        className="absolute left-12 right-12 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden "
+                        style={{
+                            backgroundColor: card.color,
+                            zIndex: index,
+                            color: card.text,
+                            // Offset the visual top slightly so they look like a stacked deck
+                            top: `calc(50% - 200px + ${index * 20}px)`,
+                        }}
+                    >
+                        <div className="md:w-1/2 flex flex-col justify-center">
+                            <h1 className="text-6xl md:text-[7vw] font-extrabold text-[#f8f3eb]/25 absolute -top-3 md:-top-5 -left-2 md:-left-4">
+                                0{index + 1}
+                            </h1>
+                            <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                                one-on-one mental
+                            </h1>
+                            <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                                performance
+                            </h1>
+                            <h1 className="text-lg md:text-[3vw] text-center uppercase font-bold md:leading-none">
+                                coaching
+                            </h1>
+                            <p className="md:w-2/3 mt-10 mb-5">
+                                Personalized sessions focused on your specific challenges, whether
+                                it's negative self-talk, performance anxiety, or fear of failure. We
+                                build practical mental skills you can use immediately to maximize
+                                your full potential.
+                            </p>
+                            <CustomButton text="See our program" />
+                        </div>
+                        <div className="md:w-1/2">
+                            <Image
+                                src="/pod-images/study-2.jpeg"
+                                width="400"
+                                height="400"
+                                alt="thumbnail"
+                                className="w-6xl"
+                            />
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
-};
+}
