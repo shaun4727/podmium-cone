@@ -60,7 +60,7 @@ export const TransformationStory = () => {
                         width="500"
                         height="400"
                         alt="play volley ball"
-                        className="h-[450] w-[300px] md:w-auto object-cover "
+                        className="h-[450] w-[300px] md:w-[650px] object-cover "
                     />
                 </div>
                 <div className="mt-6 md:mt-0 md:w-1/2 text-lg font-montserrat flex flex-col gap-8">
