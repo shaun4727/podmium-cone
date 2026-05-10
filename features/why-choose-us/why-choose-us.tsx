@@ -1,8 +1,39 @@
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import { useLayoutEffect, useRef } from 'react';
+
+// Register the ScrollTrigger plugin
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 export const WhyChooseUs = () => {
+    const whyChooseUsRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            const myElements = gsap.utils.toArray<HTMLElement>('.choose-card');
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: whyChooseUsRef.current,
+                    start: 'top -300%',
+                    end: '+=500%',
+                    markers: true,
+                },
+            });
+
+            myElements.forEach((el, i) => {
+                tl.from(el, { y: 800, ease: 'power3.inOut', duration: 1.5 }, i * 0.5);
+            });
+        }, whyChooseUsRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <div className="text-white px-4 md:px-12 py-20">
+        <div className="text-white px-4 md:px-12 py-20" ref={whyChooseUsRef}>
             <h1 className="text-4xl md:text-[4vw] leading-none font-extrabold font-roboto uppercase text-center py-12">
                 why athlete choose <br /> podium mindset
             </h1>
