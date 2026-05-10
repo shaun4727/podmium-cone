@@ -1,9 +1,87 @@
 import { CustomButton } from '@/components/common/animated-button';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import { useLayoutEffect, useRef } from 'react';
+
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 export const TransformationStory = () => {
+    const transformationContainerRef = useRef(null);
+
+    useLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: transformationContainerRef.current,
+                    start: 'top -410%',
+                    end: '+=500%',
+                },
+            });
+
+            tl.fromTo(
+                '.transform-subject',
+                {
+                    // Start State: All points are squashed at the BOTTOM (Y = 100%)
+                    // Top-Left (pushed down), Top-Right (pushed down), Bottom-Right, Bottom-Left
+                    clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
+                    opacity: 0,
+                },
+                {
+                    // End State: Fully revealed standard rectangle
+                    // Top-Left (at top), Top-Right (at top), Bottom-Right, Bottom-Left
+                    clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                    opacity: 1,
+                    duration: 1.5,
+                    ease: 'power4.inOut',
+                },
+                '-=0.4'
+            )
+                .fromTo(
+                    '.transform-playing',
+                    {
+                        // Start State: All points are squashed to the RIGHT edge (X = 100%)
+                        // Top-Left (pushed right), Top-Right, Bottom-Right, Bottom-Left (pushed right)
+                        clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
+                        opacity: 0,
+                    },
+                    {
+                        // End State: Fully revealed standard rectangle
+                        // Top-Left (returns to 0%), Top-Right, Bottom-Right, Bottom-Left (returns to 0%)
+                        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                        opacity: 1,
+                        duration: 1.5,
+                        ease: 'power4.inOut',
+                    },
+                    '-=0.4'
+                )
+                .fromTo(
+                    '.transform-volleyball',
+                    {
+                        // Start State: All points are squashed to the RIGHT edge (X = 100%)
+                        // Top-Left (pushed right), Top-Right, Bottom-Right, Bottom-Left (pushed right)
+                        clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
+                        opacity: 0,
+                    },
+                    {
+                        // End State: Fully revealed standard rectangle
+                        // Top-Left (returns to 0%), Top-Right, Bottom-Right, Bottom-Left (returns to 0%)
+                        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                        opacity: 1,
+                        duration: 1.5,
+                        ease: 'power4.inOut',
+                    },
+                    '-=0.4'
+                );
+        }, transformationContainerRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <div className=" bg-[#fbf9f5] px-4 md:px-12 py-6 md:py-36">
+        <div className=" bg-[#fbf9f5] px-4 md:px-12 py-6 md:py-36" ref={transformationContainerRef}>
             <h1 className="text-[2e2b25] text-4xl md:text-[4vw] font-roboto uppercase leading-none font-extrabold">
                 a mental transformation <br /> story:{' '}
                 <span className="text-[#9b917d]">andrew nicols</span>
@@ -48,19 +126,25 @@ export const TransformationStory = () => {
                         width="400"
                         height="500"
                         alt="transformation-story"
-                        className="w-full h-[750px] object-cover object-top"
+                        className="w-full h-[750px] object-cover object-top transform-subject"
                     />
                 </div>
             </div>
             <div className="flex flex-col md:flex-row mt-10">
                 <div className="md:w-1/2 flex flex-col gap-6">
-                    <Image src="/pod-images/playing.jpg" width="700" height="450" alt="playing" />
+                    <Image
+                        src="/pod-images/playing.jpg"
+                        width="700"
+                        height="450"
+                        alt="playing"
+                        className="transform-playing"
+                    />
                     <Image
                         src="/pod-images/playing-volleyball.jpg"
                         width="500"
                         height="400"
                         alt="play volley ball"
-                        className="h-[450] w-[300px] md:w-[650px] object-cover "
+                        className="h-[450] w-[300px] md:w-[650px] transform-volleyball object-cover "
                     />
                 </div>
                 <div className="mt-6 md:mt-0 md:w-1/2 text-lg font-montserrat flex flex-col gap-8">

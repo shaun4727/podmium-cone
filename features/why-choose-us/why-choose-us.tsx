@@ -1,11 +1,13 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 import Image from 'next/image';
 import { useLayoutEffect, useRef } from 'react';
 
 // Register the ScrollTrigger plugin
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(SplitText);
 }
 
 export const WhyChooseUs = () => {
@@ -20,13 +22,42 @@ export const WhyChooseUs = () => {
                     trigger: whyChooseUsRef.current,
                     start: 'top -300%',
                     end: '+=500%',
-                    markers: true,
                 },
             });
 
-            myElements.forEach((el, i) => {
-                tl.from(el, { y: 800, ease: 'power3.inOut', duration: 1.5 }, i * 0.5);
+            const split = new SplitText('.split-choose', {
+                type: 'lines, words, chars',
+                linesClass: 'overflow-hidden',
             });
+            tl.from(split.chars, {
+                yPercent: 100,
+                autoAlpha: 0, // Combines opacity: 0 and visibility: hidden
+                stagger: {
+                    amount: 0.8, // Total time spread across all characters
+                    from: 'start',
+                },
+                delay: 0.2,
+            });
+            myElements.forEach((el, i) => {
+                tl.from(el, { y: 400, opacity: 0, ease: 'power3.inOut', duration: 1.5 }, i * 0.5);
+            });
+
+            tl.fromTo(
+                '.choose-victory',
+                {
+                    // Top-Left, Top-Right, Bottom-Right (squashed), Bottom-Left (squashed)
+                    clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+                    opacity: 0,
+                },
+                {
+                    // Top-Left, Top-Right, Bottom-Right (full), Bottom-Left (full)
+                    clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                    opacity: 1,
+                    duration: 1.5,
+                    ease: 'power4.inOut',
+                },
+                '-=0.4'
+            );
         }, whyChooseUsRef);
 
         return () => ctx.revert();
@@ -34,7 +65,7 @@ export const WhyChooseUs = () => {
 
     return (
         <div className="text-white px-4 md:px-12 py-20" ref={whyChooseUsRef}>
-            <h1 className="text-4xl md:text-[4vw] leading-none font-extrabold font-roboto uppercase text-center py-12">
+            <h1 className="split-choose text-4xl md:text-[4vw] leading-none font-extrabold font-roboto uppercase text-center py-12">
                 why athlete choose <br /> podium mindset
             </h1>
             <div className="choose-section flex flex-col md:grid md:grid-rows-6 md:grid-flow-col md:grid-cols-3 gap-4">
@@ -123,13 +154,13 @@ export const WhyChooseUs = () => {
                         />
                     </div>
                 </div>
-                <div className="hidden md:block award-winner row-span-6 col-auto bg-amber-500 ">
+                <div className="hidden md:block award-winner row-span-6 col-auto  ">
                     <Image
                         src={`/pod-images/intense-focus.jpg`}
                         width="500"
                         height="400"
                         alt="award-winner"
-                        className="object-cover w-full h-[600px]"
+                        className="object-cover w-full h-[600px] choose-victory"
                     />
                 </div>
             </div>
