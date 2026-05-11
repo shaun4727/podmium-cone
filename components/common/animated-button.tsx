@@ -28,16 +28,16 @@ export const CustomButton = ({
             className={cn(
                 'group relative overflow-hidden uppercase cursor-pointer flex items-center justify-between gap-2 p-2 transition-colors duration-500 font-roboto',
                 /* Responsive Width Requirement */
-                'w-full md:w-[225px]',
+                'w-full md:w-auto',
                 bgColor,
                 textColor,
                 className
             )}
         >
             {/* 1. The Content (Text) */}
-            <span className="relative z-11 pl-2 group-hover:text-white transition-colors duration-500">
+            <h1 className="relative z-11 pl-2 group-hover:text-white transition-colors duration-500">
                 {text}
-            </span>
+            </h1>
 
             {/* 2. The Arrow Wrapper + Expanding Background */}
             <span
