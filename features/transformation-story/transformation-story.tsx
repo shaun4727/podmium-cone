@@ -13,68 +13,130 @@ export const TransformationStory = () => {
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: transformationContainerRef.current,
-                    start: 'top -410%',
-                    end: '+=500%',
-                },
+            // 1. Initialize matchMedia
+            let mm = gsap.matchMedia();
+
+            // --------------------------------------------------
+            // DESKTOP ANIMATION (Screens 768px and wider)
+            // This is your EXACT original code. It remains untouched.
+            // --------------------------------------------------
+            mm.add('(min-width: 768px)', () => {
+                const tlDesktop = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: transformationContainerRef.current,
+                        start: 'top -410%',
+                        end: '+=500%',
+                    },
+                });
+
+                tlDesktop
+                    .fromTo(
+                        '.transform-subject',
+                        {
+                            // Start State: All points are squashed at the BOTTOM (Y = 100%)
+                            // Top-Left (pushed down), Top-Right (pushed down), Bottom-Right, Bottom-Left
+                            clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
+                            opacity: 0,
+                        },
+                        {
+                            // End State: Fully revealed standard rectangle
+                            // Top-Left (at top), Top-Right (at top), Bottom-Right, Bottom-Left
+                            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                            opacity: 1,
+                            duration: 1.5,
+                            ease: 'power4.inOut',
+                        },
+                        '-=0.4'
+                    )
+                    .fromTo(
+                        '.transform-playing',
+                        {
+                            // Start State: All points are squashed to the RIGHT edge (X = 100%)
+                            // Top-Left (pushed right), Top-Right, Bottom-Right, Bottom-Left (pushed right)
+                            clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
+                            opacity: 0,
+                        },
+                        {
+                            // End State: Fully revealed standard rectangle
+                            // Top-Left (returns to 0%), Top-Right, Bottom-Right, Bottom-Left (returns to 0%)
+                            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                            opacity: 1,
+                            duration: 1.5,
+                            ease: 'power4.inOut',
+                        },
+                        '-=0.4'
+                    )
+                    .fromTo(
+                        '.transform-volleyball',
+                        {
+                            // Start State: All points are squashed to the RIGHT edge (X = 100%)
+                            // Top-Left (pushed right), Top-Right, Bottom-Right, Bottom-Left (pushed right)
+                            clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
+                            opacity: 0,
+                        },
+                        {
+                            // End State: Fully revealed standard rectangle
+                            // Top-Left (returns to 0%), Top-Right, Bottom-Right, Bottom-Left (returns to 0%)
+                            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                            opacity: 1,
+                            duration: 1.5,
+                            ease: 'power4.inOut',
+                        },
+                        '-=0.4'
+                    );
             });
 
-            tl.fromTo(
-                '.transform-subject',
-                {
-                    // Start State: All points are squashed at the BOTTOM (Y = 100%)
-                    // Top-Left (pushed down), Top-Right (pushed down), Bottom-Right, Bottom-Left
-                    clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
-                    opacity: 0,
-                },
-                {
-                    // End State: Fully revealed standard rectangle
-                    // Top-Left (at top), Top-Right (at top), Bottom-Right, Bottom-Left
-                    clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-                    opacity: 1,
-                    duration: 1.5,
-                    ease: 'power4.inOut',
-                },
-                '-=0.4'
-            )
-                .fromTo(
-                    '.transform-playing',
-                    {
-                        // Start State: All points are squashed to the RIGHT edge (X = 100%)
-                        // Top-Left (pushed right), Top-Right, Bottom-Right, Bottom-Left (pushed right)
-                        clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
-                        opacity: 0,
+            // --------------------------------------------------
+            // MOBILE ANIMATION (Screens smaller than 768px)
+            // We adjust the triggers and timings here safely!
+            // --------------------------------------------------
+            mm.add('(max-width: 767px)', () => {
+                const tlMobile = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: transformationContainerRef.current,
+                        // FIX 1: Adjust this start trigger. You likely need it to fire
+                        // later on mobile, so try something like 'top -100%' or 'top 20%'
+                        start: 'top -401%',
+                        end: '+=500%',
                     },
-                    {
-                        // End State: Fully revealed standard rectangle
-                        // Top-Left (returns to 0%), Top-Right, Bottom-Right, Bottom-Left (returns to 0%)
-                        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-                        opacity: 1,
-                        duration: 1.5,
-                        ease: 'power4.inOut',
-                    },
-                    '-=0.4'
-                )
-                .fromTo(
-                    '.transform-volleyball',
-                    {
-                        // Start State: All points are squashed to the RIGHT edge (X = 100%)
-                        // Top-Left (pushed right), Top-Right, Bottom-Right, Bottom-Left (pushed right)
-                        clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
-                        opacity: 0,
-                    },
-                    {
-                        // End State: Fully revealed standard rectangle
-                        // Top-Left (returns to 0%), Top-Right, Bottom-Right, Bottom-Left (returns to 0%)
-                        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-                        opacity: 1,
-                        duration: 1.5,
-                        ease: 'power4.inOut',
-                    },
-                    '-=0.4'
-                );
+                });
+
+                tlMobile
+                    .fromTo(
+                        '.transform-subject',
+                        { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', opacity: 0 },
+                        {
+                            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                            opacity: 1,
+                            duration: 1.5,
+                            ease: 'power4.inOut',
+                        }
+                    )
+                    .fromTo(
+                        '.transform-playing',
+                        { clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)', opacity: 0 },
+                        {
+                            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                            opacity: 1,
+                            duration: 1.5,
+                            ease: 'power4.inOut',
+                        },
+                        // FIX 2: Change '-=0.4' (overlap) to a positive delay like '+=0.5'
+                        // This forces the timeline to wait for the user to scroll down to the next image
+                        '+=0.5'
+                    )
+                    .fromTo(
+                        '.transform-volleyball',
+                        { clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)', opacity: 0 },
+                        {
+                            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                            opacity: 1,
+                            duration: 1.5,
+                            ease: 'power4.inOut',
+                        },
+                        '+=0.5' // Positive delay for mobile
+                    );
+            });
         }, transformationContainerRef);
 
         return () => ctx.revert();

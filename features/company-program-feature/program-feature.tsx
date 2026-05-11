@@ -70,7 +70,7 @@ export default function LayeredProgram() {
                         ref={(el) => {
                             cardsRef.current[index] = el;
                         }}
-                        className="absolute left-12 right-12 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden "
+                        className="absolute letf-4 md:left-12 md:right-12 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden "
                         style={{
                             backgroundColor: card.color,
                             zIndex: index,

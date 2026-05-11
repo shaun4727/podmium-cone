@@ -117,7 +117,7 @@ export default function VideoRevealSection() {
                     muted
                     loop
                     playsInline
-                    className="absolute inset-0  object-cover pointer-events-none pinned-video-item"
+                    className="absolute top-0 left-0 w-full h-[100dvh] object-cover pointer-events-none pinned-video-item"
                 />
 
                 <div id="bg-layer" className="px-4 md:px-12 relative z-4">
