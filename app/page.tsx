@@ -53,7 +53,7 @@ const page = () => {
                     opacity: 1,
                 },
                 {
-                    y: '90vh', // Positioned nicely on screen
+                    y: '80vh', // Positioned nicely on screen
                     scale: 1,
                     borderRadius: '0px',
                     opacity: 1,
@@ -72,7 +72,7 @@ const page = () => {
             <div ref={heroRef} className="z-0">
                 <HeroSection />
             </div>
-            <div className="absolute top-100 left-1/2 -translate-x-[53%]   md:left-[10%] md:translate-x-0 md:w-auto pointer-events-none flex justify-center items-end z-10">
+            <div className="absolute top-100 left-1/2 -translate-x-[50%]   md:left-[10%] md:translate-x-0 md:w-auto pointer-events-none flex justify-center items-end z-10">
                 <div
                     ref={programsWrapperRef}
                     className="bg-white pointer-events-auto md:shadow-2xl flex-1 px-1 md:px-15"
