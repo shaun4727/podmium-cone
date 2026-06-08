@@ -62,7 +62,7 @@ export default function LayeredProgram() {
             {/* The Pinned Container */}
             <div
                 ref={containerRef}
-                className="h-screen w-full relative flex items-center justify-center overflow-hidden"
+                className="h-screen w-full  relative flex items-center justify-center overflow-hidden"
             >
                 {cardsData.map((card, index) => (
                     <div
@@ -70,7 +70,7 @@ export default function LayeredProgram() {
                         ref={(el) => {
                             cardsRef.current[index] = el;
                         }}
-                        className="absolute letf-4 md:left-12 md:right-12 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden "
+                        className="absolute letf-4 mx-3 md:left-12 md:right-12 font-montserrat flex flex-col md:flex-row gap-12 p-2 md:p-15 overflow-hidden "
                         style={{
                             backgroundColor: card.color,
                             zIndex: index,

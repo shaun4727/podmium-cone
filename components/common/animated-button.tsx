@@ -22,14 +22,19 @@ export const CustomButton = ({
     iconBgColor = 'bg-theme-brandy',
     onClick,
 }: CustomButtonProps) => {
+    const isHexColor = bgColor?.startsWith('#') || bgColor?.startsWith('rgb');
+
     return (
         <button
             onClick={onClick}
+            style={{
+                // Safely apply raw hex as inline style if it's a hex string
+                backgroundColor: isHexColor ? bgColor : undefined,
+            }}
             className={cn(
                 'group relative overflow-hidden uppercase cursor-pointer flex items-center justify-between gap-2 p-2 transition-colors duration-500 font-roboto',
-                /* Responsive Width Requirement */
                 'w-full md:w-auto',
-                bgColor,
+                !isHexColor && bgColor, // Fallback to class if it's not a hex code
                 textColor,
                 className
             )}
