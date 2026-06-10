@@ -2,6 +2,7 @@
 
 import { AboutHero } from '@/features/about-hero/about-hero';
 import { GreatJourney } from '@/features/great-journey/great-journey';
+import { MentalSuccess } from '@/features/mental-success/mental-success';
 import { RealizationComponent } from '@/features/realization/realization';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -61,6 +62,7 @@ const Page = () => {
             <AboutHero />
             <GreatJourney />
             <RealizationComponent />
+            <MentalSuccess />
         </main>
     );
 };
