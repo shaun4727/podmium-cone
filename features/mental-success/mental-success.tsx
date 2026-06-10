@@ -13,19 +13,29 @@ export const MentalSuccess = () => {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Create a timeline mapped to the scroll position of the container
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: mentalSuccessRef.current,
-                    start: 'top top',
-                    end: `end end`, // Extend scroll distance based on card count
-                    scrub: true, // Smooth scrubbing
-                    pin: '.middle-section', // Pin the container in place while scrolling
-                },
+            // 1. Create the standalone tween (must be paused or it plays instantly)
+            const photos = gsap.utils.toArray('.pinned-image');
+            gsap.set(photos, { yPercent: 101 });
+            const animation = gsap.to(photos, {
+                yPercent: 0,
+                duration: 1,
+                stagger: 1,
+            });
+
+            // 2. Tie it together using the standalone ScrollTrigger creator
+            ScrollTrigger.create({
+                trigger: mentalSuccessRef.current,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 1.5,
+                pin: '.middle-section',
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                animation: animation, // 🔥 Valid here!
             });
         }, mentalSuccessRef);
 
-        return () => ctx.revert(); // Clean up GSAP instances on unmount
+        return () => ctx.revert();
     }, []);
 
     return (
@@ -38,7 +48,7 @@ export const MentalSuccess = () => {
             <p className="text-xl font-roboto text-center my-10">
                 We walk alongside you every step of your mental performance journey:
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 ">
                 <div className="first-col">
                     <div className="bg-red-400 h-150 w-full"></div>
                     <div className="flex flex-col gap-6">
@@ -54,7 +64,7 @@ export const MentalSuccess = () => {
                         </p>
                     </div>
                     <div className="bg-red-400 h-230 w-full"></div>
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-6 ">
                         <h4 className="font-bold text-xl border-l-2 border-theme-brandy px-1">
                             02
                         </h4>
@@ -73,28 +83,28 @@ export const MentalSuccess = () => {
                         width="500"
                         height="600"
                         alt="formal image"
-                        className="absolute z-1 inset-0 w-100"
+                        className="absolute z-1"
                     />
                     <Image
                         src="/pod-images/about/mental-2.jpg"
                         width="500"
                         height="600"
                         alt="formal image"
-                        className="absolute z-2"
+                        className="absolute z-2 pinned-image"
                     />
                     <Image
                         src="/pod-images/about/mental-3.jpg"
                         width="500"
                         height="600"
                         alt="formal image"
-                        className="absolute z-3"
+                        className="absolute z-3 pinned-image"
                     />
                     <Image
                         src="/pod-images/about/mental-4.jpg"
                         width="500"
                         height="600"
                         alt="formal image"
-                        className="absolute z-4"
+                        className="absolute z-4 pinned-image"
                     />
                 </div>
                 <div className="third-col">
