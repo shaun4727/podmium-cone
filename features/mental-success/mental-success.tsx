@@ -51,7 +51,7 @@ export const MentalSuccess = () => {
             <div className="flex gap-4 ">
                 <div className="first-col">
                     <div className="bg-red-400 h-150 w-full"></div>
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-6 first-1">
                         <h4 className="font-bold text-xl border-l-2 border-theme-brandy px-1">
                             01
                         </h4>
@@ -64,7 +64,7 @@ export const MentalSuccess = () => {
                         </p>
                     </div>
                     <div className="bg-red-400 h-230 w-full"></div>
-                    <div className="flex flex-col gap-6 ">
+                    <div className="flex flex-col gap-6 first-2">
                         <h4 className="font-bold text-xl border-l-2 border-theme-brandy px-1">
                             02
                         </h4>
@@ -109,7 +109,7 @@ export const MentalSuccess = () => {
                 </div>
                 <div className="third-col">
                     <div className="bg-red-400 h-260 w-full"></div>
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-6 first-3">
                         <h4 className="font-bold text-xl border-l-2 border-theme-brandy px-1">
                             03
                         </h4>
@@ -122,7 +122,7 @@ export const MentalSuccess = () => {
                         </p>
                     </div>
                     <div className="bg-red-400 h-260 w-full"></div>
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-6 first-4">
                         <h4 className="font-bold text-xl border-l-2 border-theme-brandy px-1">
                             04
                         </h4>
