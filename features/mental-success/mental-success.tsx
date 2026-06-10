@@ -33,6 +33,31 @@ export const MentalSuccess = () => {
                 invalidateOnRefresh: true,
                 animation: animation, // 🔥 Valid here!
             });
+
+            const textBlocks = ['.first-1', '.first-3'];
+            textBlocks.forEach((className) => {
+                ScrollTrigger.create({
+                    trigger: className,
+                    endTrigger: mentalSuccessRef.current, // 🔥 Watch the main container
+                    start: 'top 200',
+                    end: 'bottom bottom', // 🔥 Unpin when the container bottom hits viewport bottom
+                    pin: true,
+                    pinSpacing: false, // 🔥 Prevents infinite layout padding bugs
+                    invalidateOnRefresh: true,
+                });
+            });
+            const textBlocks2 = ['.first-2', '.first-4'];
+            textBlocks2.forEach((className) => {
+                ScrollTrigger.create({
+                    trigger: className,
+                    endTrigger: mentalSuccessRef.current, // 🔥 Watch the main container
+                    start: 'top 600',
+                    end: 'bottom bottom', // 🔥 Unpin when the container bottom hits viewport bottom
+                    pin: true,
+                    pinSpacing: false, // 🔥 Prevents infinite layout padding bugs
+                    invalidateOnRefresh: true,
+                });
+            });
         }, mentalSuccessRef);
 
         return () => ctx.revert();
@@ -50,7 +75,7 @@ export const MentalSuccess = () => {
             </p>
             <div className="flex gap-4 ">
                 <div className="first-col">
-                    <div className="bg-red-400 h-150 w-full"></div>
+                    <div className=" h-150 w-full"></div>
                     <div className="flex flex-col gap-6 first-1">
                         <h4 className="font-bold text-xl border-l-2 border-theme-brandy px-1">
                             01
@@ -63,7 +88,7 @@ export const MentalSuccess = () => {
                             unique challenges, goals, and experiences.
                         </p>
                     </div>
-                    <div className="bg-red-400 h-230 w-full"></div>
+                    <div className=" h-230 w-full"></div>
                     <div className="flex flex-col gap-6 first-2">
                         <h4 className="font-bold text-xl border-l-2 border-theme-brandy px-1">
                             02
@@ -108,7 +133,7 @@ export const MentalSuccess = () => {
                     />
                 </div>
                 <div className="third-col">
-                    <div className="bg-red-400 h-260 w-full"></div>
+                    <div className=" h-260 w-full"></div>
                     <div className="flex flex-col gap-6 first-3">
                         <h4 className="font-bold text-xl border-l-2 border-theme-brandy px-1">
                             03
@@ -121,7 +146,7 @@ export const MentalSuccess = () => {
                             unique challenges, goals, and experiences.
                         </p>
                     </div>
-                    <div className="bg-red-400 h-260 w-full"></div>
+                    <div className=" h-260 w-full"></div>
                     <div className="flex flex-col gap-6 first-4">
                         <h4 className="font-bold text-xl border-l-2 border-theme-brandy px-1">
                             04
@@ -134,6 +159,7 @@ export const MentalSuccess = () => {
                             unique challenges, goals, and experiences.
                         </p>
                     </div>
+                    <div className=" h-60 w-full"></div>
                 </div>
             </div>
         </div>
