@@ -1,9 +1,11 @@
 'use client';
 
+import { FooterComponent } from '@/components/layout/footer';
 import { AboutHero } from '@/features/about-hero/about-hero';
 import { GreatJourney } from '@/features/great-journey/great-journey';
 import { MentalSuccess } from '@/features/mental-success/mental-success';
 import { RealizationComponent } from '@/features/realization/realization';
+import { StartBelieving } from '@/features/start-believing/start-believing';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
@@ -63,6 +65,8 @@ const Page = () => {
             <GreatJourney />
             <RealizationComponent />
             <MentalSuccess />
+            <StartBelieving />
+            <FooterComponent />
         </main>
     );
 };
