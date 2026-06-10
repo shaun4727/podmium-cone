@@ -1,6 +1,8 @@
 'use client';
 
 import { AboutHero } from '@/features/about-hero/about-hero';
+import { GreatJourney } from '@/features/great-journey/great-journey';
+import { RealizationComponent } from '@/features/realization/realization';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
@@ -57,13 +59,8 @@ const Page = () => {
                This gives the CSS clipPath an explicit spatial boundary to clip against.
             */}
             <AboutHero />
-            <div className="mt-40">
-                <h1 className="uppercase font-montserrat text-[5vw] font-bold leading-none text-center">
-                    the journey from good to great...is{' '}
-                    <span className="text-[#b19c7e]">in your mind</span>
-                </h1>
-            </div>
-            <div className="min-h-screen"></div>
+            <GreatJourney />
+            <RealizationComponent />
         </main>
     );
 };
