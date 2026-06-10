@@ -1,8 +1,35 @@
+'use client';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 
+// Register the ScrollTrigger plugin
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 export const MentalSuccess = () => {
+    const mentalSuccessRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            // Create a timeline mapped to the scroll position of the container
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: mentalSuccessRef.current,
+                    start: 'top top',
+                    end: `end end`, // Extend scroll distance based on card count
+                    scrub: true, // Smooth scrubbing
+                    pin: '.middle-section', // Pin the container in place while scrolling
+                },
+            });
+        }, mentalSuccessRef);
+
+        return () => ctx.revert(); // Clean up GSAP instances on unmount
+    }, []);
+
     return (
-        <div className="md:mt-40 md:px-16">
+        <div className="md:mt-40 md:px-16" ref={mentalSuccessRef}>
             <div className="flex justify-center">
                 <h1 className="w-200 text-[5vw] font-bold font-roboto uppercase  text-center leading-none">
                     your path to mental success
@@ -40,7 +67,7 @@ export const MentalSuccess = () => {
                         </p>
                     </div>
                 </div>
-                <div className="relative w-full max-w-[500px] h-[600px] flex-shrink-0  overflow-hidden shadow-xl">
+                <div className="relative w-full max-w-[500px] h-[600px] flex-shrink-0  overflow-hidden shadow-xl middle-section">
                     <Image
                         src="/pod-images/about/mental-1.jpg"
                         width="500"
