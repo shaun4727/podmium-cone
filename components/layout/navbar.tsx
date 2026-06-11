@@ -3,6 +3,7 @@ import { Button } from '../ui/button';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 import { useEffect, useLayoutEffect } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -62,7 +63,9 @@ export const Navbar = () => {
                 </h1>
                 <ul className="text-white uppercase flex gap-8 items-center">
                     <li className="group relative cursor-pointer px-6 py-2 overflow-hidden transition-colors duration-500 hover:text-black">
-                        <span className="relative z-10">Home</span>
+                        <Link href={`/`} className="relative z-10">
+                            Home
+                        </Link>
 
                         {/* 2. The background layer */}
                         <div className="absolute inset-0 bg-white scale-x-0 origin-right transition-transform duration-500 group-hover:scale-x-100 group-hover:origin-left" />
@@ -72,7 +75,9 @@ export const Navbar = () => {
                         <div className="absolute inset-0 bg-white scale-x-0 origin-right transition-transform duration-500 group-hover:scale-x-100 group-hover:origin-left" />
                     </li>
                     <li className="group relative cursor-pointer px-6 py-2 overflow-hidden transition-colors duration-500 hover:text-black">
-                        <span className="relative z-10">About</span>
+                        <Link href={`/about`} className="relative z-10">
+                            About
+                        </Link>
                         <div className="absolute inset-0 bg-white scale-x-0 origin-right transition-transform duration-500 group-hover:scale-x-100 group-hover:origin-left" />
                     </li>
                     <li className="group relative cursor-pointer px-6 py-2 overflow-hidden transition-colors duration-500 hover:text-black">
