@@ -17,10 +17,10 @@ export const AboutHero = () => {
 
             {/* Content Overlay */}
             <div className="absolute top-1/4 left-12 right-12 md:right-[150px] z-20 max-w-5xl">
-                <h1 className="text-white text-[5vw] leading-none font-montserrat uppercase font-bold">
+                <h1 className="text-white text-[10vw] md:text-[5vw] leading-none font-montserrat uppercase font-bold">
                     Your guide to peak athletic mental performance
                 </h1>
-                <p className="text-white text-xl md:text-3xl font-roboto mt-8 mb-6 max-w-3xl">
+                <p className="hidden md:block text-white text-xl md:text-3xl font-roboto mt-8 mb-6 max-w-3xl">
                     The secret to athletic success is not about pushing harder—it's about conquering
                     the voice in your head. We’re here to show you how.
                 </p>
@@ -28,7 +28,7 @@ export const AboutHero = () => {
                     text="Schedule an Intro call"
                     bgColor="#dec49e"
                     textColor="text-black"
-                    className="font-bold px-6 py-3"
+                    className="font-bold px-6 py-3 mt-4 md:mt-0"
                 />
             </div>
         </div>

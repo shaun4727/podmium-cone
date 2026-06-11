@@ -3,11 +3,11 @@ import { CustomButton } from '@/components/common/animated-button';
 export const GreatJourney = () => {
     return (
         <div className="mt-40 font-roboto flex  items-center flex-col gap-12">
-            <h1 className="uppercase font-montserrat text-[5vw] font-bold leading-none text-center">
+            <h1 className="uppercase font-montserrat text-[10vw] md:text-[5vw] font-bold leading-none px-4 md:px-0 text-center">
                 the journey from good to great...is{' '}
                 <span className="text-[#b19c7e]">in your mind</span>
             </h1>
-            <div className="w-[60%] flex flex-col gap-8">
+            <div className="px-8 md:px-0 md:w-[60%] flex flex-col gap-8">
                 <p className="text-2xl text-center">
                     As a competitor, you’ll reach a point where your athletic ability alone isn't
                     enough.
@@ -29,7 +29,9 @@ export const GreatJourney = () => {
                     figure it out by yourself.
                 </p>
             </div>
-            <CustomButton text="see our program" className="p-4 flex gap-30" />
+            <div className="w-[80%] md:flex md:justify-center">
+                <CustomButton text="see our program" className="p-4 flex gap-30 " />
+            </div>
         </div>
     );
 };

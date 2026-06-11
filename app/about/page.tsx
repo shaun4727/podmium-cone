@@ -27,28 +27,30 @@ const Page = () => {
                 const { isMobile } = context.conditions || {};
                 // Target the element cleanly
 
-                gsap.fromTo(
-                    '#about-image',
-                    {
-                        ease: 'none',
-                        scale: '1',
-                    },
-                    {
-                        ease: 'none',
-                        scale: '.6',
-                        scrollTrigger: {
-                            trigger: aboutContainer.current,
-                            // FIX: Start when the top of the container is 20% above the viewport bottom
-                            // This kicks the animation off earlier than 'top bottom'
-                            start: isMobile ? 'top 118%' : 'top top',
-                            // End when the bottom of the container is 20% above the viewport top
-                            end: isMobile ? 'bottom -10%' : 'bottom top',
-                            scrub: 1.5,
-                            invalidateOnRefresh: true,
-                            fastScrollEnd: true,
+                if (!isMobile) {
+                    gsap.fromTo(
+                        '#about-image',
+                        {
+                            ease: 'none',
+                            scale: '1',
                         },
-                    }
-                );
+                        {
+                            ease: 'none',
+                            scale: '.6',
+                            scrollTrigger: {
+                                trigger: aboutContainer.current,
+                                // FIX: Start when the top of the container is 20% above the viewport bottom
+                                // This kicks the animation off earlier than 'top bottom'
+                                start: 'top top',
+                                // End when the bottom of the container is 20% above the viewport top
+                                end: 'bottom top',
+                                scrub: 1.5,
+                                invalidateOnRefresh: true,
+                                fastScrollEnd: true,
+                            },
+                        }
+                    );
+                }
             },
             aboutContainer
         );

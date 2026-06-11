@@ -59,9 +59,12 @@ export const RealizationComponent = () => {
     }, []);
     return (
         <div
-            className="bg-black flex mt-40 justify-between gap-8 py-40"
+            className="bg-black md:flex mt-40 md:justify-between md:gap-8 py-10 px-4 md:px-0 md:py-40"
             ref={aboutRealizationContainerRef}
         >
+            <h1 className="block md:hidden uppercase text-[10vw] text-white font-bold font-montserrat leading-none">
+                i get it - because i lived it.
+            </h1>
             <Image
                 src="/pod-images/about/about-realization.jpg"
                 width="400"
@@ -70,7 +73,7 @@ export const RealizationComponent = () => {
                 className="md:w-[600px] md:h-[900px] first-player-about"
             />
             <div className="text-white split-realization-about">
-                <h1 className="uppercase text-[5vw] font-bold font-montserrat leading-none">
+                <h1 className="hidden md:block uppercase text-[5vw] font-bold font-montserrat leading-none">
                     i get it - because i lived it.
                 </h1>
                 <div className="mt-10 text-2xl leading-none font-roboto ">
