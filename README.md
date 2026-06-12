@@ -8,6 +8,10 @@ A production-ready, highly interactive mental performance coaching platform buil
 
 **The Podmium Mindset** web platform translates complex performance concepts into an immersive, interactive digital experience. Rather than relying on static layouts, the app uses cutting-edge frontend scroll mechanics to pace out information dynamically as users move through sections.
 
+### Live Link
+
+- [Podium Clone](https://podmium-cone.vercel.app/)
+
 ### Key Structural Pillars:
 
 - **Dynamic Navigation Mechanics:** A state-driven sticky navbar featuring performance-optimized scroll-reactive backdrop morphing and an integrated mobile overlay canvas drawer.
